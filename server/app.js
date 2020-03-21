@@ -1,5 +1,5 @@
 const express = require("express")
-const exampleRoutes = require("./routes/example")
+const userRoutes = require("./routes/user")
 
 const app = express()
 const port = 3001
@@ -7,8 +7,24 @@ const port = 3001
 app.use(express.urlencoded({ extended: false }))
 app.use(express.json())
 
-app.use("/api", exampleRoutes)
+app.use("/api", userRoutes)
+
+app.use((err, req, res, next) => {
+  next(createError(404))
+})
+
+app.use((err, req, res, next) => {
+  res.locals.message = err.message
+  res.locals.error = req.app.get('env') === 'development' ? err : {}
+
+  res.status(err.status || 500)
+  res.json({
+    status: err.status,
+    error: err
+  })
+})
 
 app.listen(port, () => {
   console.log(`LISTENING ON PORT ${port}`)
 })
+

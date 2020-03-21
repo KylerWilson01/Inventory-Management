@@ -1,13 +1,16 @@
 import React from "react"
-import { useExample } from "../hooks"
+import { BrowserRouter as Router, Route, Redirect } from "react-router-dom"
+import { AuthProvider, AuthRoute } from "react-auth"
+
+import Login from "./auth/Login"
 
 export default props => {
-  const { foo, get } = useExample()
-
   return (
-    <div>
-      <h1>Hello World {foo}</h1>
-      <button onClick={e => get()}>GET</button>
-    </div>
+    <AuthProvider>
+      <Router>
+        <Route path="/login" component={Login} />
+        <Route path="/" redirect={() => <Redirect path="/" to="/inventory" />} />
+      </Router>
+    </AuthProvider>
   )
 }
