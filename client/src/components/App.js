@@ -1,15 +1,17 @@
 import React from "react"
 import { BrowserRouter as Router, Route, Redirect } from "react-router-dom"
-import { AuthProvider, AuthRoute } from "react-auth"
+import { AuthProvider, AuthRoute } from "../lib/react-auth"
 
-import Login from "./auth/Login"
+import Auth from "./auth/Auth"
+import Inventory from "./inventory/Inventory"
 
 export default props => {
   return (
     <AuthProvider>
       <Router>
-        <Route path="/login" component={Login} />
-        <Route path="/" redirect={() => <Redirect path="/" to="/inventory" />} />
+        <Route path="/login" component={Auth} />
+        <Redirect path="/" to="/login" />
+        <AuthRoute path="/inventory/:username" component={Inventory} />
       </Router>
     </AuthProvider>
   )

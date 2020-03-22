@@ -1,16 +1,42 @@
 const express = require("express")
 const router = express.Router()
 const config = require('config')
+
 const sha512 = require('js-sha512')
-const jwt = require('jsonwebtoken')
 const randomSalt = require('../utils/randomstring')
+const jwt = require('jsonwebtoken')
 const conn = require('../db')
+
+router.post('/register', (req, res, next) => {
+  const username = req.body.username
+  const salt = randomSalt(20)
+  const password = sha512(req.body.password + salt)
+  const email = req.body.email
+
+  const checksql = `SELECT count(1) as count FROM users WHERE username = ?;`
+
+  conn.query(checksql, [username], (err, results, fields) => {
+    if (results[0].count > 0) {
+      res.status(409).json({
+        message: 'User already exists'
+      })
+    } else {
+      const sql = `INSERT INTO users (username, password, salt, email) VALUES (?, ?, ?, ?);`
+
+      conn.query(sql, [username, password, salt, email], (err1, results1, fields1) => {
+        res.json({
+          usr: `${username} you have an inventory now`
+        })
+      })
+    }
+  })
+})
 
 router.post('/login', (req, res, next) => {
   const username = req.body.username
   const password = req.body.password
 
-  const getsql = `SELECT username, password, salt FROM users WHERE username = ?`
+  const getsql = `SELECT username, password, salt FROM users WHERE username = ?;`
 
   conn.query(getsql, [username], (salterr, saltresults, saltfields) => {
     if (saltresults.length > 0) {
