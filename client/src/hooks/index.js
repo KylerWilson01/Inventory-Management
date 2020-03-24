@@ -1,1 +1,2 @@
-export { useExample } from "../redux/ducks/example"
+export { useInventory } from '../redux/ducks/inventory'
+export { useAuth } from '../lib/react-auth'

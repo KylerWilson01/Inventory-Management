@@ -1,0 +1,13 @@
+.newItem {
+  width: 60vw;
+  margin: 100px auto;
+  text-align: center;
+
+  .fields {
+    justify-content: space-around;
+    .input {
+      width: 100%;
+      margin: auto;
+    }
+  }
+}

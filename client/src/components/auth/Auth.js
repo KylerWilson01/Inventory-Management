@@ -3,6 +3,7 @@ import { Tab } from 'semantic-ui-react'
 
 import Login from './Login'
 import Register from './Register'
+import Nav from '../home'
 
 export default props => {
   const panes = [
@@ -17,8 +18,11 @@ export default props => {
   ]
 
   return (
-    <div className="authWrapper">
-      <Tab menu={{ secondary: true }} panes={panes} />
-    </div>
+    <>
+      <Nav />
+      <div className="authWrapper">
+        <Tab menu={{ secondary: true }} panes={panes} />
+      </div>
+    </>
   )
 }

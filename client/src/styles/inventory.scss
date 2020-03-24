@@ -1,0 +1,30 @@
+.inventory {
+  height: 95vh;
+
+  form {
+    width: 100%;
+
+    div {
+      width: 100%;
+
+      input {
+        width: 90%;
+      }
+    }
+  }
+
+  aside {
+    .tabList {
+      height: 80vh;
+      overflow: auto;
+    }
+  }
+
+  main {
+    .inventoryList {
+      height: 75vh;
+      overflow: auto;
+      padding: 0;
+    }
+  }
+}
