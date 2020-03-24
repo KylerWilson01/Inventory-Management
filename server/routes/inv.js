@@ -15,28 +15,18 @@ const conn = require("../db")
 //   })
 // })
 
-router.get("/category/:slug/inventory", (req, res, next) => {
-  const sql = `SELECT * FROM inventory`
-  conn.query(sql, (err, results, fields) => {
-    const inv = results
-      .filter(i => i.category_id == null)
-      .map(c => ({
-        ...c,
-        sub: results.filter(i => i.category_id == c.id)
-      }))
-    const slug = req.params.slug
-    const invSql = `SELECT c.id, c.name FROM categories c LEFT JOIN inventory i ON c.inventory_id = i.id WHERE i.slug = ?`
-    conn.query(
-      "SELECT name FROM inventory WHERE slug = ?",
-      [slug],
-      (err1, results1, fields1) => {
-        conn.query(invSql, [slug], (err, results, fields) => {
-          const invName = results[0].name
-          res.json(inv, invSql)
-        })
-      }
-    )
-  })
+router.get("/inventory/:id", (req, res, next) => {
+  const cat_id = req.params.id
+
+  conn.query(
+    "SELECT name FROM inventory WHERE cat_id = ?",
+    [cat_id],
+    (err, results, fields) => {
+      res.json({
+        results
+      })
+    }
+  )
 })
 
 // combine these two ^ v
@@ -58,17 +48,18 @@ router.get("/category/:slug/inventory", (req, res, next) => {
 //   )
 // })
 
-router.post("/inventory/:id", (req, res, next) => {
-  const getSQL = `SELECT id FROM category WHERE slug = ?`
-  const insertSql = `INSERT INTO inventory (id, name, category_id, slug) VALUES (?, ?, ?, ?)`
+router.post("/inventory/:catid", (req, res, next) => {
+  const getSQL = `SELECT c.id c.name FROM categories c LEFT JOIN inventory i ON c.id = WHERE cat_id = ?`
+
   conn.query(getSQL, [req.body.slug], (err, results, fields) => {
-    const invId = results[0].invId
+    const insertSql = `INSERT INTO inventory (name, cat_id, price) VALUES (?, ?, ?)`
+
     conn.query(
       insertSql,
-      [req.body.name, req.body.inventory, invId],
+      [req.body.name, req.body.cat_id, req.body.price],
       (err2, results2, fields2) => {
         res.json({
-          id: results2.insertId
+          results2
         })
       }
     )
