@@ -1,7 +1,8 @@
-import React, { useEffect, useState, Component } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useAuth, useCats, useInventory } from '../../hooks'
 import { Tab, Grid, Image, Form, Input, Button, Header, Icon, Modal, Label } from 'semantic-ui-react'
 import "../../styles/inventory.scss"
+import Items from './Items'
 
 export default props => {
   const { profile, signout } = useAuth()
@@ -17,7 +18,7 @@ export default props => {
 
   useEffect(() => {
     getCats(profile.username)
-  }, [form])
+  }, [form, categories.length])
 
   function handleSearch(e) {
     e.preventDefault()
@@ -26,8 +27,6 @@ export default props => {
   function handlePost(e) {
     e.preventDefault()
     post(form, catid)
-    setForm('')
-    props.history.push('/inventory')
   }
 
   function handleChange(e, field) {
@@ -74,24 +73,7 @@ export default props => {
           </Modal.Content>
         </Modal>
         {cat.inventory[0].name ? cat.inventory.map((item, i) => (
-          <Grid key={'item-' + i} celled='internally'>
-            <Grid.Row>
-              <Grid.Column width={3}>
-                <Image src={item.img} />
-              </Grid.Column>
-              <Grid.Column width={10}>
-                <h1>{item.name}</h1>
-                <p>{item.description}</p>
-              </Grid.Column>
-              <Grid.Column width={3}>
-                <p>Quantity: {item.quantity}</p>
-                <p>
-                  ${(Number(item.quantity) * Number(item.price)).toFixed(2)} total price for {item.name}
-                </p>
-                <p>{Number(item.price) ? `$${item.price.toFixed(2)}` : `$${item.price}`} per {item.name}</p>
-              </Grid.Column>
-            </Grid.Row>
-          </Grid>
+          <Items item={item} key={'item-' + i} />
         )) : <h1>Please Enter an Item</h1>}
       </Tab.Pane>
     }
