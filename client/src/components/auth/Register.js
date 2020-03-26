@@ -57,7 +57,7 @@ export default props => {
     if (valid) {
       api.post('/register', { username, email, password }).then(resp => {
         signin(username, password).then(resp => {
-          props.history.push('/inventory/' + username)
+          props.history.push('/inventory')
         })
       })
     }

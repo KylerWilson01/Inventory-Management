@@ -18,7 +18,7 @@ export default props => {
         <Route path="/about-us" component={About} />
         <Route path="/contact-us" component={Contact} />
         <Route path="/login" component={Auth} />
-        <AuthRoute exact path="/inventory/:username" component={Inventory} />
+        <AuthRoute exact path="/inventory" component={Inventory} />
         <AuthRoute path="/inventory/:username/new-tab" component={CatForm} />
         <AuthRoute path="/inventory/:username/new-item" component={ItemForm} />
       </Router>

@@ -13,7 +13,7 @@ export default props => {
     e.preventDefault()
 
     signin(username, password).then(resp => {
-      props.history.push('/inventory/' + username)
+      props.history.push('/inventory')
     }).catch(err => console.log('ERROR', err))
   }
 
