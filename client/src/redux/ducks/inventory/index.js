@@ -11,7 +11,7 @@ const initialState = {
 export default (state = initialState, action) => {
   switch (action.type) {
     case ADD_ITEM:
-      return { ...state, inventory: action.payload }
+      return { ...state, inventory: [...state.inventory, action.payload] }
     case GET_INVENTORY:
       return { ...state, inventory: action.payload }
     default:
@@ -30,11 +30,25 @@ function getInventory(catid) {
   }
 }
 
+function addInventory(form, catid) {
+  const item = { form, catid }
+  console.log(item)
+  return dispatch => {
+    api.post('/inventory', item).then(resp => {
+      dispatch({
+        type: ADD_ITEM,
+        payload: item
+      })
+    })
+  }
+}
+
 export function useInventory() {
   const dispatch = useDispatch()
   const inventory = useSelector(appState => appState.inventoryState.inventory)
 
   const fetchInventory = catid => dispatch(getInventory(catid))
+  const post = (form, catid) => dispatch(addInventory(form, catid))
 
-  return { inventory, fetchInventory }
+  return { inventory, fetchInventory, post }
 }

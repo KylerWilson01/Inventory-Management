@@ -1,29 +1,80 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState, Component } from 'react'
 import { useAuth, useCats, useInventory } from '../../hooks'
-import { Tab, Grid, Image, Input } from 'semantic-ui-react'
+import { Tab, Grid, Image, Form, Input, Button, Header, Icon, Modal, Label } from 'semantic-ui-react'
 import "../../styles/inventory.scss"
 
 export default props => {
   const { profile, signout } = useAuth()
+  const { post } = useInventory()
   const { categories, getCats } = useCats()
+  const [form, setForm] = useState({
+    name: '',
+    price: '',
+    description: '',
+    quantity: ''
+  })
+  const [catid, setCatid] = useState('')
 
   useEffect(() => {
     getCats(profile.username)
-  }, [])
+  }, [form])
 
-  function handleSubmit(e) {
+  function handleSearch(e) {
     e.preventDefault()
+  }
+
+  function handlePost(e) {
+    e.preventDefault()
+    post(form, catid)
+    setForm('')
+    props.history.push('/inventory')
+  }
+
+  function handleChange(e, field) {
+    setForm({
+      ...form,
+      [field]: e.target.value
+    })
   }
 
   const panes = categories.map(cat => (
     {
       menuItem: cat.cat,
       render: () => <Tab.Pane>
-        <form className="searchbar" onSubmit={handleSubmit}>
+        <form className="searchbar" onSubmit={handleSearch}>
           <Input action='search' placeholder='Search...' />
         </form>
-        {cat.inventory.length > 1 ? cat.inventory.map(item => (
-          <Grid celled='internally'>
+        <Modal trigger={<Button>Add New Item</Button>} closeIcon>
+          <Header content='Add New Item' />
+          <Modal.Content>
+            <Form onSubmit={handlePost} >
+              {setCatid(cat.id)}
+              <Form.Group widths='equal'>
+                <Form.Field>
+                  <label>Item Name</label>
+                  <Input onInput={e => handleChange(e, 'name')} fluid placeholder='Orange' />
+                </Form.Field>
+                <Form.Field>
+                  <label>Quantity</label>
+                  <Input onInput={e => handleChange(e, 'quantity')} fluid type="number" placeholder='5' />
+                </Form.Field>
+                <Form.Field>
+                  <label>Price</label>
+                  <Input onInput={e => handleChange(e, 'price')} labelPosition='right' placeholder='6.8'>
+                    <Label basic>$</Label>
+                    <input />
+                  </Input>
+                </Form.Field>
+              </Form.Group>
+              <Form.TextArea onChange={e => handleChange(e, 'description')} label='Description' placeholder='Tell us about your item...' />
+              <Button action="submit" color='green'>
+                <Icon name='checkmark' /> Add
+              </Button>
+            </Form>
+          </Modal.Content>
+        </Modal>
+        {cat.inventory[0].name ? cat.inventory.map((item, i) => (
+          <Grid key={'item-' + i} celled='internally'>
             <Grid.Row>
               <Grid.Column width={3}>
                 <Image src={item.img} />

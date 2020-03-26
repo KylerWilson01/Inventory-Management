@@ -16,19 +16,17 @@ router.get("/inventory/:catid", (req, res, next) => {
   })
 })
 
-router.post("/inventory/:catid", (req, res, next) => {
-  const name = req.body.name
-  const quantity = req.body.quantity
-  const price = req.body.price
-  const description = req.body.description
-  const catid = req.params.catid
+router.post("/inventory", (req, res, next) => {
+  const form = req.body.form
+  const catid = req.body.catid
+
 
   const insertSql = `
     INSERT INTO inventory (name, cat_id, price, description, quantity)
     VALUES (?, ?, ?, ?, ?);
     `
 
-  conn.query(insertSql, [name, catid, price, description, quantity], (err2, results2, fields2) => {
+  conn.query(insertSql, [form.name, catid, form.price, form.description, form.quantity], (err2, results2, fields2) => {
     res.json({
       results2
     })
@@ -49,11 +47,3 @@ router.delete("/inventory/:id", (req, res, next) => {
 })
 
 module.exports = router
-
-// const getSQL = `
-// SELECT c.id, c.user_id, i.name, i.price, i.quantity, i.description
-// FROM categories c 
-// LEFT JOIN inventory i
-// ON c.id = i.cat_id 
-// WHERE i.cat_id = ?;
-// `

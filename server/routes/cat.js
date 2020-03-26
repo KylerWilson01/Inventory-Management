@@ -4,7 +4,7 @@ const conn = require("../db")
 
 router.get("/categories/:username", (req, res, next) => {
   const sql = `
-  SELECT c.name as cat, i.name, i.price, i.quantity, i.description
+  SELECT c.name as cat, c.id, i.name, i.price, i.quantity, i.description
   FROM users u
   LEFT JOIN categories c
   ON u.id = c.user_id
@@ -27,6 +27,7 @@ router.get("/categories/:username", (req, res, next) => {
       } else {
         data.cats.push({
           cat: item.cat,
+          id: item.id,
           inventory: [{
             name: item.name,
             price: item.price,
