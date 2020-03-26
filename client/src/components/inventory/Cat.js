@@ -1,11 +1,14 @@
 import React from 'react'
 import { Form, Input, Button } from 'semantic-ui-react'
+import { useAuth } from '../../hooks'
 
 export default props => {
-  console.log(props)
+  const { profile } = useAuth()
+
+
   function handleSubmit(e) {
     e.preventDefault()
-    props.history.push('/inventory/' + props.match.params.username)
+    props.history.push('/inventory/' + profile.username)
   }
 
   return (
