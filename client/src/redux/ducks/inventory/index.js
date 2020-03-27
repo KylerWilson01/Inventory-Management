@@ -1,8 +1,9 @@
-import { useSelector, useDispatch } from 'react-redux'
-import { api } from '../../../lib/react-auth'
+import { useSelector, useDispatch } from "react-redux"
+import { api } from "../../../lib/react-auth"
 
-const ADD_ITEM = 'inventory/ADD_ITEM'
-const GET_INVENTORY = 'inventory/GET_INVENTORY'
+const ADD_ITEM = "inventory/ADD_ITEM"
+const GET_INVENTORY = "inventory/GET_INVENTORY"
+const UPDATE_QUANTITY = "inventory/UPDATE_QUANTITY"
 
 const initialState = {
   inventory: []
@@ -14,8 +15,21 @@ export default (state = initialState, action) => {
       return { ...state, inventory: [...state.inventory, action.payload] }
     case GET_INVENTORY:
       return { ...state, inventory: action.payload }
+    case UPDATE_QUANTITY:
+      return { ...state, inventory: [...state.inventory, action.payload] }
     default:
       return state
+  }
+}
+
+function updateQuantity(quantity, id) {
+  return dispatch => {
+    api.patch("/inventory", { quantity, id }).then(resp => {
+      dispatch({
+        type: UPDATE_QUANTITY,
+        payload: { quantity, id }
+      })
+    })
   }
 }
 
@@ -32,9 +46,8 @@ function getInventory(catid) {
 
 function addInventory(form, catid) {
   const item = { form, catid }
-  console.log(item)
   return dispatch => {
-    api.post('/inventory', item).then(resp => {
+    api.post("/inventory", item).then(resp => {
       dispatch({
         type: ADD_ITEM,
         payload: item
@@ -49,6 +62,7 @@ export function useInventory() {
 
   const fetchInventory = catid => dispatch(getInventory(catid))
   const post = (form, catid) => dispatch(addInventory(form, catid))
+  const update = (quantity, id) => dispatch(updateQuantity(quantity, id))
 
-  return { inventory, fetchInventory, post }
+  return { inventory, fetchInventory, post, update }
 }
