@@ -15,6 +15,19 @@
   color: white;
 }
 
-.button {
+.ui.button {
+  background-color: #981f16;
+}
+
+.ui.secondary.menu .active.item {
   color: white;
+}
+
+body {
+  background: #373737;
+}
+
+h1 {
+  color: white;
+  margin-left: 10px;
 }
