@@ -4,7 +4,7 @@ const conn = require("../db")
 
 router.get("/categories/:username", (req, res, next) => {
   const sql = `
-  SELECT c.name as cat, c.id, i.name, i.price, i.quantity, i.description
+  SELECT c.name as cat, c.id, i.name, i.price, i.quantity, i.description, i.id as itemid
   FROM users u
   LEFT JOIN categories c
   ON u.id = c.user_id
@@ -12,32 +12,35 @@ router.get("/categories/:username", (req, res, next) => {
   ON c.id = i.cat_id
   WHERE u.username = ?;
   `
-
   conn.query(sql, [req.params.username], (err, results, fields) => {
     let data = { cats: [] }
-
     results.forEach(item => {
       if (data.cats.filter(cat => cat.cat === item.cat).length > 0) {
-        data.cats.find(cat => cat.cat === item.cat).inventory.push({
-          name: item.name,
-          price: item.price,
-          quantity: item.quantity,
-          description: item.description
-        })
+        data.cats
+          .find(cat => cat.cat === item.cat)
+          .inventory.push({
+            name: item.name,
+            price: item.price,
+            quantity: item.quantity,
+            description: item.description,
+            id: item.itemid
+          })
       } else {
         data.cats.push({
           cat: item.cat,
           id: item.id,
-          inventory: [{
-            name: item.name,
-            price: item.price,
-            quantity: item.quantity,
-            description: item.description
-          }]
+          inventory: [
+            {
+              name: item.name,
+              price: item.price,
+              quantity: item.quantity,
+              description: item.description,
+              id: item.itemid
+            }
+          ]
         })
       }
     })
-
     res.json(data)
   })
 })
