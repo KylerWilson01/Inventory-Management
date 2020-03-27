@@ -16,7 +16,7 @@ router.get("/inventory/:catid", (req, res, next) => {
   })
 })
 
-router.post("/inventory/:catid", (req, res, next) => {
+router.post("/inventory", (req, res, next) => {
   const name = req.body.name
   const quantity = req.body.quantity
   const price = req.body.price
