@@ -1,22 +1,40 @@
-import React from 'react'
-import { Form, Input, Button } from 'semantic-ui-react'
-import { useAuth } from '../../hooks'
+import React, { useState } from 'react'
+import { Form, Input, Button, Modal, Label, Header, Icon } from 'semantic-ui-react'
+import { useAuth, useCats } from '../../hooks'
 
 export default props => {
   const { profile } = useAuth()
+  const { addCat } = useCats()
+  const [cat, setCat] = useState({
+    name: '',
+    user: profile.username
+  })
 
+  function handleChange(e, field) {
+    setCat({
+      ...cat,
+      [field]: e.target.value
+    })
+  }
 
   function handleSubmit(e) {
     e.preventDefault()
-    props.history.push('/inventory/' + profile.username)
+    addCat(cat)
   }
 
   return (
-    <Form onSubmit={handleSubmit}>
-      <Form.Field required>
-        <Input label="New Category Name:" placeholder='Home' />
-      </Form.Field>
-      <Button type='submit'>Submit</Button>
-    </Form>
+    <Modal
+      trigger={<Button>Add a New Tab</Button>}
+      header='Add a New Tab'
+      content={<Form>
+        <Form.Group widths='equal'>
+          <Form.Field>
+            <label>Tab Name</label>
+            <Input onInput={e => handleChange(e, 'name')} fluid placeholder='Storage Closet' />
+          </Form.Field>
+        </Form.Group>
+      </Form>}
+      actions={[{ key: 'done', content: 'Add', positive: true, onClick: handleSubmit }]}
+    />
   )
 }
