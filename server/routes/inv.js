@@ -14,24 +14,6 @@ router.get("/inventory/:catid", (req, res, next) => {
       results
     })
   })
-<<<<<<< HEAD
-})
-
-router.post("/inventory", (req, res, next) => {
-  const form = req.body.form
-  const catid = req.body.catid
-
-
-  const insertSql = `
-    INSERT INTO inventory (name, cat_id, price, description, quantity)
-    VALUES (?, ?, ?, ?, ?);
-    `
-
-  conn.query(insertSql, [form.name, catid, form.price, form.description, form.quantity], (err2, results2, fields2) => {
-    res.json({
-      results2
-    })
-=======
 })
 
 router.post("/inventory/:catid", (req, res, next) => {
@@ -58,12 +40,11 @@ router.post("/inventory/:catid", (req, res, next) => {
 })
 
 router.patch("/inventory", (req, res, next) => {
-  const updateSql = "UPDATE iventory SET quantity = ? WHERE id = ?"
+  const updateSql = "UPDATE inventory SET quantity = ? WHERE id = ?"
   const quantity = req.body.quantity
   const id = req.body.id
   conn.query(updateSql, [quantity, id], (err, results, fields) => {
     res.json({ results })
->>>>>>> nick-2
   })
 })
 

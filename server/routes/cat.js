@@ -4,11 +4,7 @@ const conn = require("../db")
 
 router.get("/categories/:username", (req, res, next) => {
   const sql = `
-<<<<<<< HEAD
   SELECT c.name as cat, c.id, i.name, i.price, i.quantity, i.description
-=======
-  SELECT c.name as cat, i.name, i.price, i.quantity, i.description
->>>>>>> nick-2
   FROM users u
   LEFT JOIN categories c
   ON u.id = c.user_id
@@ -22,7 +18,6 @@ router.get("/categories/:username", (req, res, next) => {
 
     results.forEach(item => {
       if (data.cats.filter(cat => cat.cat === item.cat).length > 0) {
-<<<<<<< HEAD
         data.cats.find(cat => cat.cat === item.cat).inventory.push({
           name: item.name,
           price: item.price,
@@ -34,31 +29,11 @@ router.get("/categories/:username", (req, res, next) => {
           cat: item.cat,
           id: item.id,
           inventory: [{
-=======
-        data.cats
-          .find(cat => cat.cat === item.cat)
-          .inventory.push({
->>>>>>> nick-2
             name: item.name,
             price: item.price,
             quantity: item.quantity,
             description: item.description
-<<<<<<< HEAD
           }]
-=======
-          })
-      } else {
-        data.cats.push({
-          cat: item.cat,
-          inventory: [
-            {
-              name: item.name,
-              price: item.price,
-              quantity: item.quantity,
-              description: item.description
-            }
-          ]
->>>>>>> nick-2
         })
       }
     })
@@ -75,18 +50,6 @@ router.post("/categories/:username", (req, res, next) => {
 
   conn.query(getSql, [username], (err, results, fields) => {
     const user_id = results[0].id
-<<<<<<< HEAD
-    console.log("NAME", name)
-
-    const insertSql = `INSERT INTO categories (name, user_id) VALUES (?, ?);`
-    conn.query(insertSql, [name, user_id],
-      (err2, results2, fields2) => {
-        res.json({
-          id: results2
-        })
-      }
-    )
-=======
 
     const insertSql = `INSERT INTO categories (name, user_id) VALUES (?, ?);`
     conn.query(insertSql, [name, user_id], (err2, results2, fields2) => {
@@ -94,7 +57,6 @@ router.post("/categories/:username", (req, res, next) => {
         id: results2
       })
     })
->>>>>>> nick-2
   })
 })
 
