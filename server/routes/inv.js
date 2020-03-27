@@ -17,11 +17,12 @@ router.get("/inventory/:catid", (req, res, next) => {
 })
 
 router.post("/inventory", (req, res, next) => {
+  console.log(req.body)
   const name = req.body.name
   const quantity = req.body.quantity
   const price = req.body.price
   const description = req.body.description
-  const catid = req.params.catid
+  const catid = req.body.catid
 
   const insertSql = `
     INSERT INTO inventory (name, cat_id, price, description, quantity)
