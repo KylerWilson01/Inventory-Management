@@ -1,6 +1,6 @@
-import React from 'react'
+import React from "react"
 
-import Nav from './index'
+import Nav from "./index"
 
 export default props => {
   return (

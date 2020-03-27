@@ -2,3 +2,19 @@
   width: 500px;
   margin: 100px auto 0;
 }
+
+.ui.tab.active {
+  background-color: #373737;
+}
+
+.ui.menu .active.item {
+  color: white;
+}
+
+.ui.secondary.menu .item {
+  color: white;
+}
+
+.button {
+  color: white;
+}
