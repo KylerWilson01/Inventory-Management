@@ -51,6 +51,7 @@ router.post("/categories/:username", (req, res, next) => {
 
   conn.query(getSql, [username], (err, results, fields) => {
     const user_id = results[0].id
+    console.log("NAME", name)
 
     const insertSql = `INSERT INTO categories (name, user_id) VALUES (?, ?);`
     conn.query(insertSql, [name, user_id],

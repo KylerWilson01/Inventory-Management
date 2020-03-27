@@ -32,7 +32,6 @@ function getInventory(catid) {
 
 function addInventory(form, catid) {
   const item = { form, catid }
-  console.log(item)
   return dispatch => {
     api.post('/inventory', item).then(resp => {
       dispatch({
