@@ -65,7 +65,6 @@ router.get("/categories/:username", (req, res, next) => {
 
     res.json(data)
   })
-
 })
 
 router.post("/categories/:username", (req, res, next) => {
