@@ -1,4 +1,34 @@
 .authWrapper {
   width: 500px;
   margin: 100px auto 0;
+  height: 100vh;
+}
+
+.ui.tab.active {
+  background-color: #373737;
+}
+
+.ui.menu .active.item {
+  color: white;
+}
+
+.ui.secondary.menu .item {
+  color: white;
+}
+
+.ui.button {
+  background-color: #981f16;
+}
+
+.ui.secondary.menu .active.item {
+  color: white;
+}
+
+body {
+  background: #373737;
+}
+
+h1 {
+  color: white;
+  margin-left: 10px;
 }
