@@ -1,13 +1,19 @@
 .navlist {
+  background: var(--red-background);
+
   ul {
     display: flex;
     list-style-type: none;
     width: 90vw;
-    padding: 0;
-    margin: 15px auto 0;
+    padding: 15px 0;
+    margin: auto;
 
     li {
       padding: 0 10px;
+
+      a {
+        color: var(--color-peach);
+      }
     }
 
     li:last-child {

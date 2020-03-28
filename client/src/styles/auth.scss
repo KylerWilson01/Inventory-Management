@@ -1,4 +1,39 @@
-.authWrapper {
-  width: 500px;
-  margin: 100px auto 0;
+.auth {
+  background: var(--color-darkgray);
+  height: 100vh;
+
+  .authWrapper {
+    width: 500px;
+    margin: 100px auto 0;
+
+    .ui.secondary.menu {
+      .item {
+        border: 1px solid var(--color-gray);
+        color: var(--color-peach);
+      }
+
+      .active.item {
+        border: 1px solid var(--color-red);
+        background: var(--color-gray);
+        color: var(--color-peach);
+      }
+    }
+
+    .ui.segment.active.tab {
+      background: var(--color-gray);
+      border: 1px solid var(--color-red);
+
+      div .ui.form .field .ui.input input {
+        background: transparent;
+        border: 1px solid var(--color-darkgray);
+        color: var(--color-peach);
+      }
+
+      div .ui.form button.ui.button {
+        color: var(--color-peach);
+        background: transparent;
+        border: 1px solid var(--color-darkgray);
+      }
+    }
+  }
 }

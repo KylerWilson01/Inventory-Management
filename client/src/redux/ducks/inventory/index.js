@@ -1,5 +1,7 @@
+import { useEffect } from 'react'
 import { useSelector, useDispatch } from "react-redux"
-import { api } from "../../../lib/react-auth"
+import { api, useAuth } from "../../../lib/react-auth"
+import { useCats } from '../categories'
 
 const ADD_ITEM = "inventory/ADD_ITEM"
 const GET_INVENTORY = "inventory/GET_INVENTORY"
@@ -57,12 +59,18 @@ function addInventory(form, catid) {
 }
 
 export function useInventory() {
+  const { getCats } = useCats()
+  const { profile } = useAuth()
   const dispatch = useDispatch()
   const inventory = useSelector(appState => appState.inventoryState.inventory)
 
   const fetchInventory = catid => dispatch(getInventory(catid))
   const post = (form, catid) => dispatch(addInventory(form, catid))
   const update = (quantity, id) => dispatch(updateQuantity(quantity, id))
+
+  useEffect(() => {
+    getCats(profile.username)
+  }, [inventory])
 
   return { inventory, fetchInventory, post, update }
 }

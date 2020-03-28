@@ -18,11 +18,11 @@ export default props => {
   ]
 
   return (
-    <>
+    <div className="auth">
       <Nav />
       <div className="authWrapper">
         <Tab menu={{ secondary: true }} panes={panes} />
       </div>
-    </>
+    </div>
   )
 }

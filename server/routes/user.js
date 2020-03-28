@@ -24,8 +24,17 @@ router.post('/register', (req, res, next) => {
       const sql = `INSERT INTO users (username, password, salt, email) VALUES (?, ?, ?, ?);`
 
       conn.query(sql, [username, password, salt, email], (err1, results1, fields1) => {
-        res.json({
-          usr: `${username} you have an inventory now`
+        const getSql = `SELECT id FROM users WHERE username = ?;`
+
+        conn.query(getSql, [username], (err2, results2, fields2) => {
+          const defaultSql = `INSERT INTO categories (name, user_id) VALUES ('Home', ?);`
+          console.log(results2[0].id)
+
+          conn.query(defaultSql, [results2[0].id], (err3, results3, fields3) => {
+            res.json({
+              usr: `${username} you have an inventory now`
+            })
+          })
         })
       })
     }

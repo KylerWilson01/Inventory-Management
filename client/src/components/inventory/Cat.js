@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Form, Input, Button, Modal, Label, Header, Icon } from 'semantic-ui-react'
+import { Form, Input, Button, Modal } from 'semantic-ui-react'
 import { useAuth, useCats } from '../../hooks'
 
 export default props => {
@@ -24,7 +24,7 @@ export default props => {
 
   return (
     <Modal
-      trigger={<Button>Add a New Tab</Button>}
+      trigger={<Button className="newTab">Add a New Tab</Button>}
       header='Add a New Tab'
       content={<Form>
         <Form.Group widths='equal'>

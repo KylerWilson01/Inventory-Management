@@ -5,8 +5,6 @@ import {
   Form,
   Input,
   Button,
-  Header,
-  Icon,
   Modal,
   Label
 } from "semantic-ui-react"
@@ -29,7 +27,7 @@ export default props => {
 
   useEffect(() => {
     getCats(profile.username)
-  }, [form, categories.length])
+  }, [form])
 
   function handleSearch(e) {
     e.preventDefault()
@@ -52,64 +50,63 @@ export default props => {
     menuItem: cat.cat,
     render: () => (
       <Tab.Pane>
-        {console.log(cat.inventory)}
         <form className="searchbar" onSubmit={handleSearch}>
           <Input action="search" placeholder="Search..." />
+          <Modal
+            trigger={<Button>Add a New Item</Button>}
+            header="Add Item"
+            content={
+              <Form>
+                {setCatid(cat.id)}
+                <Form.Group widths="equal">
+                  <Form.Field>
+                    <label>Item Name</label>
+                    <Input
+                      onInput={e => handleChange(e, "name")}
+                      fluid
+                      placeholder="Orange"
+                    />
+                  </Form.Field>
+                  <Form.Field>
+                    <label>Quantity</label>
+                    <Input
+                      onInput={e => handleChange(e, "quantity")}
+                      fluid
+                      type="number"
+                      placeholder="5"
+                    />
+                  </Form.Field>
+                  <Form.Field>
+                    <label>Price</label>
+                    <Input
+                      onInput={e => handleChange(e, "price")}
+                      labelPosition="right"
+                      placeholder="6.8"
+                    >
+                      <Label basic>$</Label>
+                      <input />
+                    </Input>
+                  </Form.Field>
+                </Form.Group>
+                <Form.TextArea
+                  onChange={e => handleChange(e, "description")}
+                  label="Description"
+                  placeholder="Tell us about your item..."
+                />
+              </Form>
+            }
+            actions={[
+              { key: "done", content: "Add", positive: true, onClick: handlePost }
+            ]}
+          />
         </form>
-        <Modal
-          trigger={<Button>Add a New Item</Button>}
-          header="Add Item"
-          content={
-            <Form>
-              {setCatid(cat.id)}
-              <Form.Group widths="equal">
-                <Form.Field>
-                  <label>Item Name</label>
-                  <Input
-                    onInput={e => handleChange(e, "name")}
-                    fluid
-                    placeholder="Orange"
-                  />
-                </Form.Field>
-                <Form.Field>
-                  <label>Quantity</label>
-                  <Input
-                    onInput={e => handleChange(e, "quantity")}
-                    fluid
-                    type="number"
-                    placeholder="5"
-                  />
-                </Form.Field>
-                <Form.Field>
-                  <label>Price</label>
-                  <Input
-                    onInput={e => handleChange(e, "price")}
-                    labelPosition="right"
-                    placeholder="6.8"
-                  >
-                    <Label basic>$</Label>
-                    <input />
-                  </Input>
-                </Form.Field>
-              </Form.Group>
-              <Form.TextArea
-                onChange={e => handleChange(e, "description")}
-                label="Description"
-                placeholder="Tell us about your item..."
-              />
-            </Form>
-          }
-          actions={[
-            { key: "done", content: "Add", positive: true, onClick: handlePost }
-          ]}
-        />
         {cat.inventory[0].name ? (
           cat.inventory.map((item, i) => (
             <Items item={item} key={"item-" + i} />
           ))
         ) : (
-          <h1>Please Enter an Item</h1>
-        )}
+            <h1>Please Enter an Item</h1>
+          )}
       </Tab.Pane>
     )
   }))
@@ -118,9 +115,9 @@ export default props => {
     <div className="inventory">
       <header>
         <h1>{profile.username}</h1>
-        <button onClick={e => signout()}>Sign out</button>
+        <Button onClick={e => signout()}>Sign out</Button>
         <NewCat />
-      </header>{" "}
+      </header>
       <br />
       <Tab
         menu={{ fluid: true, vertical: true, tabular: true }}

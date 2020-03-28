@@ -1,21 +1,121 @@
 .inventory {
-  height: 90vh;
+  height: 100vh;
   width: 100vw;
+  background: var(--red-background);
 
   header {
+    display: flex;
+    flex-direction: row-reverse;
+
     h1 {
       margin: 10px;
+      color: var(--color-peach);
+    }
+
+    .button {
+      background: transparent;
+      border: 1px solid var(--color-lightred);
+      color: var(--color-peach);
+    }
+
+    .button:hover {
+      background: var(--color-gray);
+      color: var(--color-peach);
+    }
+  }
+
+  header button.ui.button.newTab {
+    margin: 0.25em auto 0 0.25em;
+  }
+
+  header button.ui.button {
+    margin: 0.25em 0.25em 0 0;
+  }
+
+  div.ui.grid .four.wide.column .ui.fluid.menu {
+    background: var(--color-darkgray);
+    border-radius: var(--border-radius);
+    border-right: none;
+
+    a.item {
+      color: var(--color-peach);
+    }
+
+    a.item.active {
+      background: var(--color-gray);
+      border: 1px solid var(--color-red);
+      font-size: 1.2rem;
+    }
+  }
+
+  .stretched.twelve.wide.column {
+    .ui.bottom.attached.segment.active.tab {
+      border-radius: var(--border-radius);
+      background: var(--color-darkgray);
+      color: var(--color-peach);
+      border: 1px solid var(--color-darkgray);
+
+      .searchbar {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 1em;
+
+        .button {
+          background: transparent;
+          border: 1px solid var(--color-gray);
+          color: var(--color-peach);
+        }
+
+        .button:hover {
+          background: var(--color-red);
+        }
+
+        .input input {
+          background: transparent;
+          color: var(--color-peach);
+          border: 1px solid var(--color-gray);
+        }
+      }
+
+      .ui.internally.celled .row .column:first-child {
+        box-shadow: none;
+      }
+
+      .ui.internally.celled .column {
+        box-shadow: -1px 0 0 0 var(--color-red);
+      }
+
+      .ui.internally.celled .column:last-child form {
+        display: flex;
+
+        .button {
+          background: transparent;
+          border: 1px solid var(--color-gray);
+          color: var(--color-peach);
+        }
+
+        .button:hover {
+          background: var(--color-red);
+        }
+
+        .input input {
+          width: 50%;
+          background: transparent;
+          border: 1px solid var(--color-gray);
+          color: var(--color-peach);
+        }
+      }
     }
   }
 
   .menu {
-    height: 90vh;
+    height: 87vh;
     overflow-y: auto;
     overflow-x: hidden;
   }
 
   .tab {
-    height: 90vh;
+    height: 87vh;
     overflow-y: auto;
     overflow-x: hidden;
   }

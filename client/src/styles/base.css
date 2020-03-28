@@ -1,5 +1,13 @@
 html {
   box-sizing: border-box;
+
+  --color-red: #8c0303;
+  --color-lightred: #a70000;
+  --color-darkgray: #252525;
+  --color-gray: #3a3a3a;
+  --color-peach: #fae7cb;
+  --red-background: linear-gradient(var(--color-red), black);
+  --border-radius: 10px;
 }
 
 *,

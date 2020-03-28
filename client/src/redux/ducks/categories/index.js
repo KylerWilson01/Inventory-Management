@@ -46,7 +46,7 @@ export function useCats() {
   const categories = useSelector(appState => appState.categoriesState.cats)
 
   const getCats = username => dispatch(getCategories(username))
-  const addCat = (cat) => dispatch(addCategory(cat))
+  const addCat = cat => dispatch(addCategory(cat))
 
   return { categories, getCats, addCat }
 }
