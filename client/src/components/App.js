@@ -1,7 +1,7 @@
 import React from "react"
 import { BrowserRouter as Router, Route } from "react-router-dom"
 import { AuthProvider, AuthRoute } from "../lib/react-auth"
-
+import "../styles/base.css"
 import Auth from "./auth/Auth"
 import Inventory from "./inventory/Inventory"
 import Home from "./home/Home"

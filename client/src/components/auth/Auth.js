@@ -1,19 +1,28 @@
-import React from 'react'
-import { Tab } from 'semantic-ui-react'
+import React from "react"
+import { Tab } from "semantic-ui-react"
 
-import Login from './Login'
-import Register from './Register'
-import Nav from '../home'
+import Login from "./Login"
+import Register from "./Register"
+import Nav from "../home"
+import "../../styles/auth.scss"
 
 export default props => {
   const panes = [
     {
-      menuItem: 'Login',
-      render: () => <Tab.Pane attached={false}><Login history={props.history} props={props} /></Tab.Pane>,
+      menuItem: "Login",
+      render: () => (
+        <Tab.Pane attached={false}>
+          <Login history={props.history} props={props} />
+        </Tab.Pane>
+      )
     },
     {
-      menuItem: 'Register',
-      render: () => <Tab.Pane attached={false}><Register history={props.history} /></Tab.Pane>,
+      menuItem: "Register",
+      render: () => (
+        <Tab.Pane attached={false}>
+          <Register history={props.history} />
+        </Tab.Pane>
+      )
     }
   ]
 
