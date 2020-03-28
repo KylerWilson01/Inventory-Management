@@ -63,16 +63,18 @@ router.post("/categories/:username", (req, res, next) => {
   })
 })
 
-router.delete("/category/:name", (req, res, next) => {
-  const deleteSql = "DELETE FROM inventory WHERE name = ?;"
-  conn.query(deleteSql, [req.body.name], (err, results, fields) => {
-    if (err) {
-      res.send({
-        code: 400
+router.delete("/category/:id", (req, res, next) => {
+  console.log(req.params.id)
+  const deleteCatSql = "DELETE FROM categories WHERE id = ?;"
+
+  conn.query(deleteCatSql, [req.params.id], (err, results, fields) => {
+    const deleteItemSql = "DELETE FROM inventory WHERE cat_id = ?;"
+
+    conn.query(deleteItemSql, [req.params.id], (err, results, fields) => {
+      res.json({
+        message: results
       })
-    } else {
-      res.redirect("/categories")
-    }
+    })
   })
 })
 

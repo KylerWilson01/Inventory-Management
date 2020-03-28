@@ -6,6 +6,7 @@ import { useCats } from '../categories'
 const ADD_ITEM = "inventory/ADD_ITEM"
 const GET_INVENTORY = "inventory/GET_INVENTORY"
 const UPDATE_QUANTITY = "inventory/UPDATE_QUANTITY"
+const DELETE_ITEM = "inventory/DELETE_ITEM"
 
 const initialState = {
   inventory: []
@@ -19,6 +20,8 @@ export default (state = initialState, action) => {
       return { ...state, inventory: action.payload }
     case UPDATE_QUANTITY:
       return { ...state, inventory: [...state.inventory, action.payload] }
+    case DELETE_ITEM:
+      return { ...state, inventory: [...state.inventory.filter(id => id !== action.payload)] }
     default:
       return state
   }
@@ -58,8 +61,20 @@ function addInventory(form, catid) {
   }
 }
 
+function deleteItem(id) {
+  console.log(id)
+  return dispatch => {
+    api.delete("/inventory/" + id).then(resp => {
+      dispatch({
+        type: DELETE_ITEM,
+        payload: id
+      })
+    })
+  }
+}
+
 export function useInventory() {
-  const { getCats } = useCats()
+  const { getCats, categories } = useCats()
   const { profile } = useAuth()
   const dispatch = useDispatch()
   const inventory = useSelector(appState => appState.inventoryState.inventory)
@@ -67,10 +82,12 @@ export function useInventory() {
   const fetchInventory = catid => dispatch(getInventory(catid))
   const post = (form, catid) => dispatch(addInventory(form, catid))
   const update = (quantity, id) => dispatch(updateQuantity(quantity, id))
+  const del = id => dispatch(deleteItem(id))
 
   useEffect(() => {
     getCats(profile.username)
+    console.log(inventory)
   }, [inventory])
 
-  return { inventory, fetchInventory, post, update }
+  return { inventory, fetchInventory, post, update, del }
 }

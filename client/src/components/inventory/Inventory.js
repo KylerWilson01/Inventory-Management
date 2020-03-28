@@ -6,7 +6,9 @@ import {
   Input,
   Button,
   Modal,
-  Label
+  Label,
+  Icon,
+  Menu
 } from "semantic-ui-react"
 import "../../styles/inventory.scss"
 import Items from "./Items"
@@ -15,7 +17,7 @@ import NewCat from "./Cat"
 export default props => {
   const { profile, signout } = useAuth()
   const { post } = useInventory()
-  const { categories, getCats } = useCats()
+  const { categories, getCats, delCat } = useCats()
 
   const [form, setForm] = useState({
     name: "",
@@ -27,7 +29,7 @@ export default props => {
 
   useEffect(() => {
     getCats(profile.username)
-  }, [form])
+  }, [categories.length])
 
   function handleSearch(e) {
     e.preventDefault()
@@ -46,8 +48,18 @@ export default props => {
     })
   }
 
-  const panes = categories.map(cat => ({
-    menuItem: cat.cat,
+  function handleCatDel(e) {
+    e.preventDefault()
+    delCat(this.id)
+    getCats(profile.username)
+  }
+
+  const panes = categories.map((cat, i) => ({
+    menuItem: (
+      <Menu.Item key={'cat-' + i}>
+        {cat.cat}<Icon id={cat.id} onClick={handleCatDel} name="close" />
+      </Menu.Item>
+    ),
     render: () => (
       <Tab.Pane>
         <form className="searchbar" onSubmit={handleSearch}>

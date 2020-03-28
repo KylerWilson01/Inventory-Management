@@ -1,15 +1,20 @@
 import React, { useState } from "react"
-import { Grid, Image, Input, Button } from "semantic-ui-react"
+import { Grid, Image, Input, Button, Icon } from "semantic-ui-react"
 import { useInventory } from "../../hooks"
 
 export default props => {
-  const { update } = useInventory()
+  const { update, del } = useInventory()
   const [quantity, setQuantity] = useState("")
   const [itemid, setItemid] = useState("")
 
   function handleUpdate(e) {
     e.preventDefault()
     update(quantity, itemid)
+  }
+
+  function handleDelete(e) {
+    e.preventDefault()
+    del(this.id)
   }
 
   return (
@@ -23,7 +28,10 @@ export default props => {
           <p>{props.item.description}</p>
         </Grid.Column>
         <Grid.Column width={3}>
-          <p>Quantity: {props.item.quantity}</p>
+          <div className="top">
+            <Icon id={props.item.id} onClick={handleDelete} name="close" />
+            <p>Quantity: {props.item.quantity}</p>
+          </div>
           <form onSubmit={handleUpdate}>
             <Input
               onInput={e => setQuantity(e.target.value)}
@@ -36,8 +44,8 @@ export default props => {
           <p>
             $
             {(Number(props.item.quantity) * Number(props.item.price)).toFixed(
-              2
-            )}{" "}
+            2
+          )}{" "}
             total price for {props.item.name}
           </p>
           <p>

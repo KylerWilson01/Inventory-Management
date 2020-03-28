@@ -44,20 +44,20 @@ router.patch("/inventory", (req, res, next) => {
   const quantity = req.body.quantity
   const id = req.body.id
   conn.query(updateSql, [quantity, id], (err, results, fields) => {
-    res.json({ results })
+    res.json({
+      results
+    })
   })
 })
 
 router.delete("/inventory/:id", (req, res, next) => {
   const deleteSql = "DELETE FROM inventory WHERE id = ?;"
-  conn.query(deleteSql, [req.body.id], (err, results, fields) => {
-    if (err) {
-      res.send({
-        code: 400
-      })
-    } else {
-      res.redirect("/category/:slug/inventory")
-    }
+  console.log(req.params)
+
+  conn.query(deleteSql, [req.params.id], (err, results, fields) => {
+    res.json({
+      results
+    })
   })
 })
 

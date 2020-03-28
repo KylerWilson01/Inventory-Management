@@ -39,6 +39,15 @@
 
     a.item {
       color: var(--color-peach);
+
+      i.close.icon {
+        opacity: 0;
+      }
+    }
+
+    a.item:hover i.close.icon {
+      opacity: 1;
+      color: var(--color-lightred);
     }
 
     a.item.active {
@@ -83,6 +92,17 @@
 
       .ui.internally.celled .column {
         box-shadow: -1px 0 0 0 var(--color-red);
+        border-bottom: 1px solid var(--color-red);
+      }
+
+      .top {
+        display: flex;
+        flex-direction: row-reverse;
+        justify-content: space-between;
+
+        .icon:hover {
+          color: var(--color-red);
+        }
       }
 
       .ui.internally.celled .column:last-child form {
