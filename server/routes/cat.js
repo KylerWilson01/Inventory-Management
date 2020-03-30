@@ -12,6 +12,7 @@ router.get("/categories/:username", (req, res, next) => {
   ON c.id = i.cat_id
   WHERE u.username = ?;
   `
+
   conn.query(sql, [req.params.username], (err, results, fields) => {
     let data = { cats: [] }
     results.forEach(item => {
@@ -64,7 +65,6 @@ router.post("/categories/:username", (req, res, next) => {
 })
 
 router.delete("/category/:id", (req, res, next) => {
-  console.log(req.params.id)
   const deleteCatSql = "DELETE FROM categories WHERE id = ?;"
 
   conn.query(deleteCatSql, [req.params.id], (err, results, fields) => {

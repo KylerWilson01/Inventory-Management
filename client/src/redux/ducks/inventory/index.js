@@ -86,7 +86,6 @@ export function useInventory() {
 
   useEffect(() => {
     getCats(profile.username)
-    console.log(inventory)
   }, [inventory])
 
   return { inventory, fetchInventory, post, update, del }

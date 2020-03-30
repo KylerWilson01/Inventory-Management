@@ -65,10 +65,5 @@ export function useCats() {
   const addCat = cat => dispatch(addCategory(cat))
   const delCat = id => dispatch(deleteCat(id))
 
-  // useEffect(() => {
-  //   getCategories(profile.username)
-  //   console.log('hey')
-  // }, [categories])
-
   return { categories, getCats, addCat, delCat }
 }

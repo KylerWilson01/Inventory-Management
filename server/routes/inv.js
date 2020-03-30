@@ -43,6 +43,7 @@ router.patch("/inventory", (req, res, next) => {
   const updateSql = "UPDATE inventory SET quantity = ? WHERE id = ?"
   const quantity = req.body.quantity
   const id = req.body.id
+
   conn.query(updateSql, [quantity, id], (err, results, fields) => {
     res.json({
       results
@@ -52,7 +53,6 @@ router.patch("/inventory", (req, res, next) => {
 
 router.delete("/inventory/:id", (req, res, next) => {
   const deleteSql = "DELETE FROM inventory WHERE id = ?;"
-  console.log(req.params)
 
   conn.query(deleteSql, [req.params.id], (err, results, fields) => {
     res.json({
