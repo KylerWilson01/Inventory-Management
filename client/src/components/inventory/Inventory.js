@@ -18,7 +18,7 @@ export default props => {
   const { profile, signout } = useAuth()
   const { post } = useInventory()
   const { categories, getCats, delCat } = useCats()
-  const [search, setSearch] = useState('')
+  const [search, setSearch] = useState("")
 
   const [form, setForm] = useState({
     name: "",
@@ -35,7 +35,9 @@ export default props => {
   function handleSearch(e) {
     e.preventDefault()
     categories.forEach(cat => {
-      cat.inventory.filter(item => (item.name == search ? console.log(search) : ""))
+      cat.inventory.filter(item =>
+        item.name == search ? console.log(search) : ""
+      )
     })
   }
 
@@ -60,14 +62,19 @@ export default props => {
 
   const panes = categories.map((cat, i) => ({
     menuItem: (
-      <Menu.Item key={'cat-' + i}>
-        {cat.cat}<Icon id={cat.id} onClick={handleCatDel} name="close" />
+      <Menu.Item key={"cat-" + i}>
+        {cat.cat}
+        <Icon id={cat.id} onClick={handleCatDel} name="close" />
       </Menu.Item>
     ),
     render: () => (
       <Tab.Pane>
         <form className="searchbar" onSubmit={handleSearch}>
-          <Input onChange={e => setSearch(e.target.value)} action="search" placeholder="Search..." />
+          <Input
+            onChange={e => setSearch(e.target.value)}
+            action="search"
+            placeholder="Search..."
+          />
           <Modal
             trigger={<Button>Add a New Item</Button>}
             header="Add Item"
@@ -112,7 +119,12 @@ export default props => {
               </Form>
             }
             actions={[
-              { key: "done", content: "Add", positive: true, onClick: handlePost }
+              {
+                key: "done",
+                content: "Add",
+                positive: true,
+                onClick: handlePost
+              }
             ]}
           />
         </form>
@@ -121,8 +133,8 @@ export default props => {
             <Items item={item} key={"item-" + i} />
           ))
         ) : (
-            <h1>Please Enter an Item</h1>
-          )}
+          <h1>Please Enter an Item</h1>
+        )}
       </Tab.Pane>
     )
   }))
