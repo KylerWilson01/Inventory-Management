@@ -3,6 +3,8 @@ const router = express.Router()
 const conn = require("../db")
 
 router.get("/categories/:username", (req, res, next) => {
+  const item = `%${req.params.item}%`
+
   const sql = `
   SELECT c.name as cat, c.id, i.name, i.price, i.quantity, i.description, i.id as itemid
   FROM users u

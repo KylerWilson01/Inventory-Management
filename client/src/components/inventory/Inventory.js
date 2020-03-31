@@ -16,9 +16,8 @@ import NewCat from "./Cat"
 
 export default props => {
   const { profile, signout } = useAuth()
-  const { post } = useInventory()
+  const { post, search } = useInventory()
   const { categories, getCats, delCat } = useCats()
-  const [search, setSearch] = useState("")
 
   const [form, setForm] = useState({
     name: "",
@@ -27,18 +26,17 @@ export default props => {
     quantity: ""
   })
   const [catid, setCatid] = useState("")
+  const [item, setItem] = useState("")
 
   useEffect(() => {
-    getCats(profile.username)
-  }, [categories.length])
+    getCats(profile.username, item)
+  }, [categories.length, item])
 
   function handleSearch(e) {
     e.preventDefault()
-    categories.forEach(cat => {
-      cat.inventory.filter(item =>
-        item.name == search ? console.log(search) : ""
-      )
-    })
+    // if (e.target.value) {
+    //   search(e.target.value, catid)
+    // }
   }
 
   function handlePost(e) {
@@ -69,10 +67,9 @@ export default props => {
     ),
     render: () => (
       <Tab.Pane>
-        <form className="searchbar" onSubmit={handleSearch}>
+        <div className="searchbar">
           <Input
-            onChange={e => setSearch(e.target.value)}
-            action="search"
+            onChange={e => setItem(e.target.value)}
             placeholder="Search..."
           />
           <Modal
@@ -127,7 +124,7 @@ export default props => {
               }
             ]}
           />
-        </form>
+        </div>
         {cat.inventory[0].name ? (
           cat.inventory.map((item, i) => (
             <Items item={item} key={"item-" + i} />

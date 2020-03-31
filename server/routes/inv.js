@@ -2,14 +2,14 @@ const express = require("express")
 const router = express.Router()
 const conn = require("../db")
 
-router.get("/inventory/:catid", (req, res, next) => {
-  const sql = `
-  SELECT i.cat_id, i.name, i.price, i.quantity, i.description 
-  FROM inventory i
-  WHERE i.cat_id = ?;
-  `
+router.get("/search/:item/:id", (req, res, next) => {
+  const search = `%${req.params.item}%`
+  const catid = req.params.id
 
-  conn.query(sql, [req.params.catid], (err, results, fields) => {
+  const searchSql = "SELECT * FROM inventory WHERE name LIKE ? AND cat_id = ?;"
+
+  conn.query(searchSql, [search, catid], (err, results, next) => {
+    console.log(results)
     res.json({
       results
     })
