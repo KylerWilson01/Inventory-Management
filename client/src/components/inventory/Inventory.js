@@ -12,7 +12,7 @@ import {
 } from "semantic-ui-react"
 import "../../styles/inventory.scss"
 import Items from "./Items"
-import NewCat from "./Cat"
+import NewCat from "./NewCat"
 
 export default props => {
   const { profile, signout } = useAuth()
