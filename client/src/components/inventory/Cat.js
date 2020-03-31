@@ -1,40 +1,89 @@
 import React, { useState } from 'react'
-import { Form, Input, Button, Modal } from 'semantic-ui-react'
-import { useAuth, useCats } from '../../hooks'
+import { Tab, Input, Form, Modal, Label, Button } from 'semantic-ui-react'
+import { useInventory } from '../../hooks'
+
+import Items from "./Items"
 
 export default props => {
-  const { profile } = useAuth()
-  const { addCat } = useCats()
-  const [cat, setCat] = useState({
-    name: '',
-    user: profile.username
+  const cat = props.props
+  const { post } = useInventory()
+  const [form, setForm] = useState({
+    name: "",
+    price: "",
+    description: "",
+    quantity: ""
   })
 
   function handleChange(e, field) {
-    setCat({
-      ...cat,
+    setForm({
+      ...form,
       [field]: e.target.value
     })
   }
 
-  function handleSubmit(e) {
+  function handlePost(e) {
     e.preventDefault()
-    addCat(cat)
+    post(form, this.id)
+    setForm({})
   }
 
   return (
-    <Modal
-      trigger={<Button className="newTab">Add a New Tab</Button>}
-      header='Add a New Tab'
-      content={<Form>
-        <Form.Group widths='equal'>
-          <Form.Field>
-            <label>Tab Name</label>
-            <Input onInput={e => handleChange(e, 'name')} fluid placeholder='Storage Closet' />
-          </Form.Field>
-        </Form.Group>
-      </Form>}
-      actions={[{ key: 'done', content: 'Add', positive: true, onClick: handleSubmit }]}
-    />
+    <Tab.Pane>
+      <div className="searchbar">
+        <Modal
+          trigger={<Button onClick={e => e.preventDefault()}>Add a New Item</Button>}
+          header="Add Item"
+          content={
+            <Form>
+              <Form.Group widths="equal">
+                <Form.Field>
+                  <label>Item Name</label>
+                  <Input
+                    onInput={e => handleChange(e, "name")}
+                    fluid
+                    placeholder="Orange"
+                  />
+                </Form.Field>
+                <Form.Field>
+                  <label>Quantity</label>
+                  <Input
+                    onInput={e => handleChange(e, "quantity")}
+                    fluid
+                    type="number"
+                    placeholder="5"
+                  />
+                </Form.Field>
+                <Form.Field>
+                  <label>Price</label>
+                  <Input
+                    onInput={e => handleChange(e, "price")}
+                    labelPosition="right"
+                    placeholder="6.8"
+                  >
+                    <Label basic>$</Label>
+                    <input />
+                  </Input>
+                </Form.Field>
+              </Form.Group>
+              <Form.TextArea
+                onChange={e => handleChange(e, "description")}
+                label="Description"
+                placeholder="Tell us about your item..."
+              />
+            </Form>
+          }
+          actions={[
+            { key: "done", content: "Add", positive: true, onClick: handlePost, id: cat.id }
+          ]}
+        />
+      </div>
+      {cat.inventory[0].name ? (
+        cat.inventory.map((item, i) => (
+          <Items item={item} key={"item-" + i} />
+        ))
+      ) : (
+          <h1>Please Enter an Item</h1>
+        )}
+    </Tab.Pane>
   )
 }
