@@ -18,7 +18,6 @@ export default props => {
   const { profile, signout } = useAuth()
   const { post } = useInventory()
   const { categories, getCats, delCat } = useCats()
-  const [search, setSearch] = useState('')
 
   const [form, setForm] = useState({
     name: "",
@@ -34,15 +33,12 @@ export default props => {
 
   function handleSearch(e) {
     e.preventDefault()
-    categories.forEach(cat => {
-      cat.inventory.filter(item => (item.name == search ? console.log(search) : ""))
-    })
   }
 
   function handlePost(e) {
     e.preventDefault()
     post(form, catid)
-    setForm({})
+    setForm("")
   }
 
   function handleChange(e, field) {
@@ -67,7 +63,7 @@ export default props => {
     render: () => (
       <Tab.Pane>
         <form className="searchbar" onSubmit={handleSearch}>
-          <Input onChange={e => setSearch(e.target.value)} action="search" placeholder="Search..." />
+          <Input action="search" placeholder="Search..." />
           <Modal
             trigger={<Button>Add a New Item</Button>}
             header="Add Item"

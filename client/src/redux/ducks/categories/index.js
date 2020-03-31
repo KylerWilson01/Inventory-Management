@@ -1,6 +1,5 @@
 import { useSelector, useDispatch } from 'react-redux'
 import { api, useAuth } from '../../../lib/react-auth'
-import { useEffect } from 'react'
 
 const ADD_CAT = 'categories/ADD_ITEM'
 const GET_CAT = 'categories/GET_CAT'
