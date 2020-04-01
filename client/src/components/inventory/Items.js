@@ -1,5 +1,13 @@
 import React, { useState } from "react"
-import { Grid, Image, Input, Button, Icon } from "semantic-ui-react"
+import {
+  Grid,
+  Image,
+  Input,
+  Button,
+  Icon,
+  Modal,
+  Item
+} from "semantic-ui-react"
 import { useInventory } from "../../hooks"
 
 export default props => {
@@ -26,6 +34,49 @@ export default props => {
         <Grid.Column width={10}>
           <h1>{props.item.name}</h1>
           <p>{props.item.description}</p>
+          <Modal
+            trigger={
+              <Button onClick={e => e.preventDefault()}>Expanded view</Button>
+            }
+            header="Expanded view"
+            content={
+              <Item.Group>
+                <Item>
+                  <Item.Image size="large" src={props.item.image} />
+
+                  <Item.Content>
+                    <Item.Header>{props.item.name}</Item.Header>
+                    <Item.Meta>
+                      <span className="totalPrice">
+                        $
+                        {(
+                          Number(props.item.quantity) * Number(props.item.price)
+                        ).toFixed(2)}{" "}
+                        total price for {props.item.name}
+                      </span>
+                      <span className="pricePer">
+                        {Number(props.item.price)
+                          ? `$${props.item.price.toFixed(2)}`
+                          : `$${props.item.price}`}{" "}
+                        per {props.item.name}
+                      </span>
+                      <form className="quantity" onSubmit={handleUpdate}>
+                        <Input
+                          onInput={e => setQuantity(e.target.value)}
+                          onFocus={e => setItemid(props.item.id)}
+                          placeholder="9"
+                          type="number"
+                        />
+                      </form>
+                    </Item.Meta>
+                    <Item.Description>
+                      {props.item.description}
+                    </Item.Description>
+                  </Item.Content>
+                </Item>
+              </Item.Group>
+            }
+          />
         </Grid.Column>
         <Grid.Column width={3}>
           <div className="top">
@@ -44,8 +95,8 @@ export default props => {
           <p>
             $
             {(Number(props.item.quantity) * Number(props.item.price)).toFixed(
-            2
-          )}{" "}
+              2
+            )}{" "}
             total price for {props.item.name}
           </p>
           <p>
