@@ -46,6 +46,56 @@ router.get("/categories/:username", (req, res, next) => {
   })
 })
 
+router.get('/search/:username/:item', (req, res, next) => {
+  const item = `%${req.params.item}%`
+  const username = req.params.username
+
+  const searchSql = `
+  SELECT c.name as cat, c.id, i.name, i.price, i.quantity, i.description, i.id as itemid
+  FROM users u
+  LEFT JOIN categories c
+  ON u.id = c.user_id
+  LEFT JOIN inventory i
+  ON c.id = i.cat_id
+  WHERE u.username = ?
+  AND i.name LIKE ?;
+  `
+
+  conn.query(searchSql, [username, item], (err, results, fields) => {
+    let data = { results: [] }
+    results.forEach(item => {
+      if (data.results.filter(cat => cat.cat === item.cat).length > 0) {
+        data.results
+          .find(cat => cat.cat === item.cat)
+          .inventory.push({
+            name: item.name,
+            price: item.price,
+            quantity: item.quantity,
+            description: item.description,
+            id: item.itemid
+          })
+      } else {
+        data.results.push({
+          cat: item.cat,
+          id: item.id,
+          inventory: [
+            {
+              name: item.name,
+              price: item.price,
+              quantity: item.quantity,
+              description: item.description,
+              id: item.itemid
+            }
+          ]
+        })
+      }
+    })
+    res.json(data)
+  })
+
+
+})
+
 router.post("/categories/:username", (req, res, next) => {
   const username = req.params.username
   const name = req.body.name
