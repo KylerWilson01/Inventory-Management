@@ -1,0 +1,27 @@
+// .ui.active.modal {
+//   height: 75%;
+//   background-color: pink;
+
+//   header {
+//     background-color: pink;
+//   }
+//   div {
+//     margin: 0;
+//     padding-top: 20px;
+
+//     // .ui.items {
+//     //   height: 100%;
+
+//     //   .ui.item {
+//     //     height: 100%;
+//   }
+// }
+
+.ui.modal.transition.visible.active {
+  background: pink;
+  height: 50%;
+
+  header {
+    background: pink;
+  }
+}

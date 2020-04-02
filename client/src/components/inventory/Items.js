@@ -9,6 +9,7 @@ import {
   Item
 } from "semantic-ui-react"
 import { useInventory } from "../../hooks"
+import "../../styles/sv.scss"
 
 export default props => {
   const { update, del } = useInventory()
@@ -76,6 +77,7 @@ export default props => {
                 </Item>
               </Item.Group>
             }
+            closeIcon
           />
         </Grid.Column>
         <Grid.Column width={3}>
