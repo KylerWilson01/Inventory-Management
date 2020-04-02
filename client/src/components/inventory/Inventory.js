@@ -25,7 +25,7 @@ export default props => {
       search(profile.username, null)
     }
   }
-
+  
   const panes = results[0] ? results.map((cat, i) => ({
     menuItem: (
       <Menu.Item key={'cat-' + i}>
