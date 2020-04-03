@@ -2,6 +2,7 @@ import { useEffect } from 'react'
 import { useSelector, useDispatch } from "react-redux"
 import { api, useAuth } from "../../../lib/react-auth"
 import { useCats } from '../categories'
+import axios from "axios"
 
 const ADD_ITEM = "inventory/ADD_ITEM"
 const GET_INVENTORY = "inventory/GET_INVENTORY"
@@ -27,6 +28,12 @@ export default (state = initialState, action) => {
   }
 }
 
+const config = {
+  headers: {
+    "content-type": "multipart/form-data"
+  }
+}
+
 function updateQuantity(quantity, id) {
   return dispatch => {
     api.patch("/inventory", { quantity, id }).then(resp => {
@@ -49,15 +56,23 @@ function getInventory(catid) {
   }
 }
 
-function addInventory(form, catid) {
-  const item = { form, catid }
+function addPicture(picture) {
+  return dispatch => {
+    axios.post('/api/upload', picture, config)
+      .then(resp => { })
+      .catch(err => console.log(err))
+  }
+}
+
+function addInventory(form, catid, picture) {
+  const item = { form, catid, picture }
   return dispatch => {
     api.post("/inventory", item).then(resp => {
       dispatch({
         type: ADD_ITEM,
         payload: item
       })
-    })
+    }).catch(e => console.log(e))
   }
 }
 
@@ -74,13 +89,14 @@ function deleteItem(id) {
 }
 
 export function useInventory() {
-  const { getCats, categories } = useCats()
+  const { getCats } = useCats()
   const { profile } = useAuth()
   const dispatch = useDispatch()
   const inventory = useSelector(appState => appState.inventoryState.inventory)
 
   const fetchInventory = catid => dispatch(getInventory(catid))
-  const post = (form, catid) => dispatch(addInventory(form, catid))
+  const post = (form, catid, picture) => dispatch(addInventory(form, catid, picture))
+  const addPic = picture => dispatch(addPicture(picture))
   const update = (quantity, id) => dispatch(updateQuantity(quantity, id))
   const del = id => dispatch(deleteItem(id))
 
@@ -88,5 +104,5 @@ export function useInventory() {
     getCats(profile.username)
   }, [inventory])
 
-  return { inventory, fetchInventory, post, update, del }
+  return { inventory, fetchInventory, post, update, del, addPic }
 }

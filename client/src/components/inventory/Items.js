@@ -101,8 +101,8 @@ export default props => {
           <p>
             $
             {(Number(props.item.quantity) * Number(props.item.price)).toFixed(
-              2
-            )}{" "}
+            2
+          )}{" "}
             total price for {props.item.name}
           </p>
           <p>

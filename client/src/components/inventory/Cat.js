@@ -1,18 +1,21 @@
 import React, { useState } from 'react'
 import { Tab, Input, Form, Modal, Label, Button } from 'semantic-ui-react'
 import { useInventory } from '../../hooks'
-
 import Items from "./Items"
+const md5 = require('md5')
+
 
 export default props => {
   const cat = props.props
-  const { post } = useInventory()
+  const { post, addPic } = useInventory()
   const [form, setForm] = useState({
     name: "",
     price: "",
     description: "",
     quantity: ""
   })
+  const [image, setImage] = useState(null)
+  const [label, setLabel] = useState("Choose a file")
 
   function handleChange(e, field) {
     setForm({
@@ -23,8 +26,24 @@ export default props => {
 
   function handlePost(e) {
     e.preventDefault()
-    post(form, this.id)
+    const rename = file =>
+      md5(Date.now()) +
+      "." +
+      file.name
+        .replace(/ /g, "-")
+        .split(".")
+        .pop()
+
+    const name = rename(image)
+
+    const data = new FormData()
+    data.append("photo", image, name)
+
+    addPic(data)
+    post(form, this.id, name)
     setForm({})
+    setImage(null)
+    setLabel("Choose a file")
   }
 
   return (
@@ -63,6 +82,17 @@ export default props => {
                     <Label basic>$</Label>
                     <input />
                   </Input>
+                </Form.Field>
+                <Form.Field>
+                  <label htmlFor='file' name="label">{label}</label>
+                  <Input
+                    id="file"
+                    type="file"
+                    name="image"
+                    onChange={e => setImage(e.target.files[0], setLabel(e.target.files[0].name))}
+                    fluid
+                    accept="image/png, image/jpeg"
+                  />
                 </Form.Field>
               </Form.Group>
               <Form.TextArea
