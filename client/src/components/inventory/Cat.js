@@ -1,17 +1,10 @@
-<<<<<<< HEAD
 import React, { useState } from "react"
 import { Tab, Input, Form, Modal, Label, Button } from "semantic-ui-react"
 import { useInventory } from "../../hooks"
 import "../../styles/sv.scss"
 
-=======
-import React, { useState } from 'react'
-import { Tab, Input, Form, Modal, Label, Button } from 'semantic-ui-react'
-import { useInventory } from '../../hooks'
->>>>>>> bbdf5b2905937b9ad9c5889eb5f469c1232084e9
 import Items from "./Items"
-const md5 = require('md5')
-
+const md5 = require("md5")
 
 export default props => {
   const cat = props.props
@@ -94,12 +87,19 @@ export default props => {
                   </Input>
                 </Form.Field>
                 <Form.Field>
-                  <label htmlFor='file' name="label">{label}</label>
+                  <label htmlFor="file" name="label">
+                    {label}
+                  </label>
                   <Input
                     id="file"
                     type="file"
                     name="image"
-                    onChange={e => setImage(e.target.files[0], setLabel(e.target.files[0].name))}
+                    onChange={e =>
+                      setImage(
+                        e.target.files[0],
+                        setLabel(e.target.files[0].name)
+                      )
+                    }
                     fluid
                     accept="image/png, image/jpeg"
                   />

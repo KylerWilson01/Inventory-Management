@@ -31,77 +31,86 @@ export default (state = initialState, action) => {
   }
 }
 
+const config = {
+  headers: {
+    "content-type": "multipart/form-data"
+  }
+}
+
 function updateItem(form, id) {
-  const config = {
-    headers: {
-      "content-type": "multipart/form-data"
-    }
+  return dispatch => {
+    api.patch("/inventory", { form, id }).then(resp => {
+      dispatch({
+        type: UPDATE_ITEM,
+        payload: { form, id }
+      })
+    })
   }
+}
 
-  function getInventory(catid) {
-    return dispatch => {
-      api.get(`/inventory/${catid}`).then(resp => {
+function getInventory(catid) {
+  return dispatch => {
+    api.get(`/inventory/${catid}`).then(resp => {
+      dispatch({
+        type: GET_INVENTORY,
+        payload: resp.results
+      })
+    })
+  }
+}
+
+function addPicture(picture) {
+  return dispatch => {
+    axios
+      .post("/api/upload", picture, config)
+      .then(resp => {})
+      .catch(err => console.log(err))
+  }
+}
+
+function addInventory(form, catid, picture) {
+  const item = { form, catid, picture }
+  return dispatch => {
+    api
+      .post("/inventory", item)
+      .then(resp => {
         dispatch({
-          type: GET_INVENTORY,
-          payload: resp.results
+          type: ADD_ITEM,
+          payload: item
         })
       })
-    }
+      .catch(e => console.log(e))
   }
+}
 
-  function addPicture(picture) {
-    return dispatch => {
-      axios
-        .post("/api/upload", picture, config)
-        .then(resp => {})
-        .catch(err => console.log(err))
-    }
-  }
-
-  function addInventory(form, catid, picture) {
-    const item = { form, catid, picture }
-    return dispatch => {
-      api
-        .post("/inventory", item)
-        .then(resp => {
-          dispatch({
-            type: ADD_ITEM,
-            payload: item
-          })
-        })
-        .catch(e => console.log(e))
-    }
-  }
-
-  function deleteItem(id) {
-    console.log(id)
-    return dispatch => {
-      api.delete("/inventory/" + id).then(resp => {
-        dispatch({
-          type: DELETE_ITEM,
-          payload: id
-        })
+function deleteItem(id) {
+  console.log(id)
+  return dispatch => {
+    api.delete("/inventory/" + id).then(resp => {
+      dispatch({
+        type: DELETE_ITEM,
+        payload: id
       })
-    }
+    })
   }
+}
 
-  export function useInventory() {
-    const { getCats } = useCats()
-    const { profile } = useAuth()
-    const dispatch = useDispatch()
-    const inventory = useSelector(appState => appState.inventoryState.inventory)
+export function useInventory() {
+  const { getCats } = useCats()
+  const { profile } = useAuth()
+  const dispatch = useDispatch()
+  const inventory = useSelector(appState => appState.inventoryState.inventory)
 
-    const fetchInventory = catid => dispatch(getInventory(catid))
-    const update = (form, id) => dispatch(updateItem(form, id))
-    const post = (form, catid, picture) =>
-      dispatch(addInventory(form, catid, picture))
-    const addPic = picture => dispatch(addPicture(picture))
-    const del = id => dispatch(deleteItem(id))
+  const fetchInventory = catid => dispatch(getInventory(catid))
+  const update = (form, id) => dispatch(updateItem(form, id))
+  const post = (form, catid, picture) =>
+    dispatch(addInventory(form, catid, picture))
+  const addPic = picture => dispatch(addPicture(picture))
+  const del = id => dispatch(deleteItem(id))
 
-    useEffect(() => {
-      getCats(profile.username)
-    }, [inventory])
+  useEffect(() => {
+    getCats(profile.username)
+  }, [inventory])
 
-    return { inventory, fetchInventory, post, update, del, addPic }
-  }
+  return { inventory, fetchInventory, post, update, del, addPic }
 }
