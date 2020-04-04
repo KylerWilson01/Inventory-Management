@@ -1,6 +1,7 @@
-import React, { useState } from 'react'
-import { Tab, Input, Form, Modal, Label, Button } from 'semantic-ui-react'
-import { useInventory } from '../../hooks'
+import React, { useState } from "react"
+import { Tab, Input, Form, Modal, Label, Button } from "semantic-ui-react"
+import { useInventory } from "../../hooks"
+import "../../styles/sv.scss"
 
 import Items from "./Items"
 
@@ -31,7 +32,9 @@ export default props => {
     <Tab.Pane>
       <div className="searchbar">
         <Modal
-          trigger={<Button onClick={e => e.preventDefault()}>Add a New Item</Button>}
+          trigger={
+            <Button onClick={e => e.preventDefault()}>Add a New Item</Button>
+          }
           header="Add Item"
           content={
             <Form>
@@ -73,17 +76,21 @@ export default props => {
             </Form>
           }
           actions={[
-            { key: "done", content: "Add", positive: true, onClick: handlePost, id: cat.id }
+            {
+              key: "done",
+              content: "Add",
+              positive: true,
+              onClick: handlePost,
+              id: cat.id
+            }
           ]}
         />
       </div>
       {cat.inventory[0].name ? (
-        cat.inventory.map((item, i) => (
-          <Items item={item} key={"item-" + i} />
-        ))
+        cat.inventory.map((item, i) => <Items item={item} key={"item-" + i} />)
       ) : (
-          <h1>Please Enter an Item</h1>
-        )}
+        <h1>Please Enter an Item</h1>
+      )}
     </Tab.Pane>
   )
 }
