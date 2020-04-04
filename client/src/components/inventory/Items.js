@@ -49,43 +49,6 @@ export default props => {
         <Grid.Column width={10}>
           <h1>{props.item.name}</h1>
           <p>{props.item.description}</p>
-          <Modal
-            trigger={
-              <Button className="ExtV" onClick={e => e.preventDefault()}>
-                Expanded view
-              </Button>
-            }
-            header={props.item.name}
-            content={
-              <Item.Group>
-                <Item>
-                  <Item.Image size="large" src={props.item.image} />
-
-                  <Item.Content>
-                    <Item.Meta>
-                      <span className="totalPrice">
-                        $
-                        {(
-                          Number(props.item.quantity) * Number(props.item.price)
-                        ).toFixed(2)}{" "}
-                        total price for {props.item.name}
-                      </span>
-                      <span className="pricePer">
-                        {Number(props.item.price)
-                          ? `$${props.item.price.toFixed(2)}`
-                          : `$${props.item.price}`}{" "}
-                        per {props.item.name}
-                      </span>
-                    </Item.Meta>
-                    <Item.Description>
-                      {props.item.description}
-                    </Item.Description>
-                  </Item.Content>
-                </Item>
-              </Item.Group>
-            }
-            closeIcon
-          />
         </Grid.Column>
         <Grid.Column width={3}>
           <div className="top">
@@ -150,6 +113,43 @@ export default props => {
                 id: props.item.id
               }
             ]}
+          />
+          <Modal
+            trigger={
+              <Button className="ExtV" onClick={e => e.preventDefault()}>
+                Expanded view
+              </Button>
+            }
+            header={props.item.name}
+            content={
+              <Item.Group>
+                <Item>
+                  <Item.Image size="large" src={props.item.image} />
+
+                  <Item.Content>
+                    <Item.Meta>
+                      <span className="totalPrice">
+                        $
+                        {(
+                          Number(props.item.quantity) * Number(props.item.price)
+                        ).toFixed(2)}{" "}
+                        total price for {props.item.name}
+                      </span>
+                      <span className="pricePer">
+                        {Number(props.item.price)
+                          ? `$${props.item.price.toFixed(2)}`
+                          : `$${props.item.price}`}{" "}
+                        per {props.item.name}
+                      </span>
+                    </Item.Meta>
+                    <Item.Description>
+                      {props.item.description}
+                    </Item.Description>
+                  </Item.Content>
+                </Item>
+              </Item.Group>
+            }
+            closeIcon
           />
         </Grid.Column>
       </Grid.Row>
