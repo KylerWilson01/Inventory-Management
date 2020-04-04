@@ -1,4 +1,5 @@
 const express = require("express")
+const fileUpload = require('express-fileupload')
 const userRoutes = require("./routes/user")
 const catRoutes = require("./routes/cat")
 const invRoutes = require("./routes/inv")
@@ -8,6 +9,11 @@ const port = 3001
 
 app.use(express.urlencoded({ extended: false }))
 app.use(express.json())
+app.use(fileUpload({
+  useTempFiles: true,
+  tempFileDir: '/tmp/'
+}))
+
 
 app.use("/api", userRoutes)
 app.use("/api", catRoutes)

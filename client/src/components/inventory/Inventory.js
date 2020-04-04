@@ -5,7 +5,11 @@ import { Tab, Button, Icon, Menu, Input } from "semantic-ui-react"
 import "../../styles/inventory.scss"
 
 import NewCat from "./NewCat"
+<<<<<<< HEAD
 import Cat from "./Cat"
+=======
+import Cat from './Cat'
+>>>>>>> bbdf5b2905937b9ad9c5889eb5f469c1232084e9
 
 export default props => {
   const { profile, signout } = useAuth()
@@ -25,6 +29,7 @@ export default props => {
       search(profile.username, null)
     }
   }
+<<<<<<< HEAD
 
   const panes = results[0]
     ? results.map((cat, i) => ({
@@ -53,6 +58,32 @@ export default props => {
           </Tab.Pane>
         )
       }))
+=======
+  
+  const panes = results[0] ? results.map((cat, i) => ({
+    menuItem: (
+      <Menu.Item key={'cat-' + i}>
+        {cat.cat}<Icon id={cat.id} onClick={handleCatDel} name="close" />
+      </Menu.Item>
+    ),
+    render: () => (
+      <Tab.Pane>
+        <Cat props={cat} />
+      </Tab.Pane>
+    )
+  })) : categories.map((cat, i) => ({
+    menuItem: (
+      <Menu.Item key={'cat-' + i}>
+        {cat.cat}<Icon id={cat.id} onClick={handleCatDel} name="close" />
+      </Menu.Item>
+    ),
+    render: () => (
+      <Tab.Pane>
+        <Cat props={cat} />
+      </Tab.Pane>
+    )
+  }))
+>>>>>>> bbdf5b2905937b9ad9c5889eb5f469c1232084e9
 
   return (
     <div className="inventory">

@@ -22,6 +22,10 @@ export default props => {
     quantity: ""
   })
 
+  const img = props.item.picture
+    ? `https://inventory-management-project.s3.amazonaws.com/${props.item.picture}`
+    : "http://placehold.it/200"
+
   function handleUpdate(e) {
     e.preventDefault()
     update(form, this.id)
@@ -44,7 +48,7 @@ export default props => {
     <Grid celled="internally">
       <Grid.Row>
         <Grid.Column width={3}>
-          <Image src={props.item.img} />
+          <Image src={img} />
         </Grid.Column>
         <Grid.Column width={10}>
           <h1>{props.item.name}</h1>
