@@ -77,7 +77,6 @@ function addInventory(form, catid, picture) {
 }
 
 function deleteItem(id) {
-  console.log(id)
   return dispatch => {
     api.delete("/inventory/" + id).then(resp => {
       dispatch({
