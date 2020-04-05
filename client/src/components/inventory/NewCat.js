@@ -1,12 +1,13 @@
-import React, { useState } from 'react'
-import { Form, Input, Button, Modal } from 'semantic-ui-react'
-import { useAuth, useCats } from '../../hooks'
+import React, { useState } from "react"
+import { Form, Input, Button, Modal } from "semantic-ui-react"
+import { useAuth, useCats } from "../../hooks"
+import "../../styles/sv.scss"
 
 export default props => {
   const { profile } = useAuth()
   const { addCat } = useCats()
   const [cat, setCat] = useState({
-    name: '',
+    name: "",
     user: profile.username
   })
 
@@ -25,16 +26,24 @@ export default props => {
   return (
     <Modal
       trigger={<Button className="newTab">Add a New Tab</Button>}
-      header='Add a New Tab'
-      content={<Form>
-        <Form.Group widths='equal'>
-          <Form.Field>
-            <label>Tab Name</label>
-            <Input onInput={e => handleChange(e, 'name')} fluid placeholder='Storage Closet' />
-          </Form.Field>
-        </Form.Group>
-      </Form>}
-      actions={[{ key: 'done', content: 'Add', positive: true, onClick: handleSubmit }]}
+      header="Add a New Tab"
+      content={
+        <Form>
+          <Form.Group widths="equal">
+            <Form.Field>
+              <label>Tab Name</label>
+              <Input
+                onInput={e => handleChange(e, "name")}
+                fluid
+                placeholder="Storage Closet"
+              />
+            </Form.Field>
+          </Form.Group>
+        </Form>
+      }
+      actions={[
+        { key: "done", content: "Add", positive: true, onClick: handleSubmit }
+      ]}
     />
   )
 }

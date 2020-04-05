@@ -1,9 +1,10 @@
-import React, { useState } from 'react'
-import { Tab, Input, Form, Modal, Label, Button } from 'semantic-ui-react'
-import { useInventory } from '../../hooks'
-import Items from "./Items"
-const md5 = require('md5')
+import React, { useState } from "react"
+import { Tab, Input, Form, Modal, Label, Button } from "semantic-ui-react"
+import { useInventory } from "../../hooks"
+import "../../styles/sv.scss"
 
+import Items from "./Items"
+const md5 = require("md5")
 
 export default props => {
   const cat = props.props
@@ -50,7 +51,9 @@ export default props => {
     <Tab.Pane>
       <div className="searchbar">
         <Modal
-          trigger={<Button onClick={e => e.preventDefault()}>Add a New Item</Button>}
+          trigger={
+            <Button onClick={e => e.preventDefault()}>Add a New Item</Button>
+          }
           header="Add Item"
           content={
             <Form>
@@ -84,12 +87,19 @@ export default props => {
                   </Input>
                 </Form.Field>
                 <Form.Field>
-                  <label htmlFor='file' name="label">{label}</label>
+                  <label htmlFor="file" name="label">
+                    {label}
+                  </label>
                   <Input
                     id="file"
                     type="file"
                     name="image"
-                    onChange={e => setImage(e.target.files[0], setLabel(e.target.files[0].name))}
+                    onChange={e =>
+                      setImage(
+                        e.target.files[0],
+                        setLabel(e.target.files[0].name)
+                      )
+                    }
                     fluid
                     accept="image/png, image/jpeg"
                   />
@@ -103,17 +113,21 @@ export default props => {
             </Form>
           }
           actions={[
-            { key: "done", content: "Add", positive: true, onClick: handlePost, id: cat.id }
+            {
+              key: "done",
+              content: "Add",
+              positive: true,
+              onClick: handlePost,
+              id: cat.id
+            }
           ]}
         />
       </div>
       {cat.inventory[0].name ? (
-        cat.inventory.map((item, i) => (
-          <Items item={item} key={"item-" + i} />
-        ))
+        cat.inventory.map((item, i) => <Items item={item} key={"item-" + i} />)
       ) : (
-          <h1>Please Enter an Item</h1>
-        )}
+        <h1>Please Enter an Item</h1>
+      )}
     </Tab.Pane>
   )
 }
