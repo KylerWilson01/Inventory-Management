@@ -86,15 +86,24 @@ router.post("/inventory", (req, res, next) => {
 })
 
 router.patch("/inventory", (req, res, next) => {
-  const updateSql = "UPDATE inventory SET quantity = ? WHERE id = ?"
-  const quantity = req.body.quantity
+  const updateSql =
+    "UPDATE inventory SET quantity = ?, name = ?, price = ?, description = ? WHERE id = ?"
+  const quantity = req.body.form.quantity
+  const name = req.body.form.name
+  const price = req.body.form.price
+  const description = req.body.form.description
+
   const id = req.body.id
 
-  conn.query(updateSql, [quantity, id], (err, results, fields) => {
-    res.json({
-      results
-    })
-  })
+  conn.query(
+    updateSql,
+    [quantity, name, price, description, id],
+    (err, results, fields) => {
+      res.json({
+        results
+      })
+    }
+  )
 })
 
 router.delete("/inventory/:id", (req, res, next) => {

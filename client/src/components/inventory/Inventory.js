@@ -6,7 +6,7 @@ import "../../styles/darkmode.scss"
 import "../../styles/lightmode.scss"
 
 import NewCat from "./NewCat"
-import Cat from './Cat'
+import Cat from "./Cat"
 
 export default props => {
   const { profile, signout } = useAuth()
@@ -37,29 +37,33 @@ export default props => {
     }
   }
 
-  const panes = results[0] ? results.map((cat, i) => ({
-    menuItem: (
-      <Menu.Item key={'cat-' + i}>
-        {cat.cat}<Icon id={cat.id} onClick={handleCatDel} name="close" />
-      </Menu.Item>
-    ),
-    render: () => (
-      <Tab.Pane>
-        <Cat props={cat} />
-      </Tab.Pane>
-    )
-  })) : categories.map((cat, i) => ({
-    menuItem: (
-      <Menu.Item key={'cat-' + i}>
-        {cat.cat}<Icon id={cat.id} onClick={handleCatDel} name="close" />
-      </Menu.Item>
-    ),
-    render: () => (
-      <Tab.Pane>
-        <Cat props={cat} />
-      </Tab.Pane>
-    )
-  }))
+  const panes = results[0]
+    ? results.map((cat, i) => ({
+      menuItem: (
+        <Menu.Item key={"cat-" + i}>
+          {cat.cat}
+          <Icon id={cat.id} onClick={handleCatDel} name="close" />
+        </Menu.Item>
+      ),
+      render: () => (
+        <Tab.Pane>
+          <Cat props={cat} />
+        </Tab.Pane>
+      )
+    }))
+    : categories.map((cat, i) => ({
+      menuItem: (
+        <Menu.Item key={"cat-" + i}>
+          {cat.cat}
+          <Icon id={cat.id} onClick={handleCatDel} name="close" />
+        </Menu.Item>
+      ),
+      render: () => (
+        <Tab.Pane>
+          <Cat props={cat} />
+        </Tab.Pane>
+      )
+    }))
 
   return (
     <div className={darkMode ? "dark-mode" : "light-mode"} >
@@ -82,7 +86,12 @@ export default props => {
         <NewCat />
       </header>
       <br />
-      <Input onInput={handleSearch} action="search" placeholder="Search..." />
+      <Input
+        className="search"
+        onInput={handleSearch}
+        action="search"
+        placeholder="Search..."
+      />
       <Tab
         menu={{ fluid: true, vertical: true, tabular: true }}
         panes={panes}

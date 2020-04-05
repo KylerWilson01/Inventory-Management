@@ -24,6 +24,14 @@
     }
   }
 
+  .ui.button.newTab:hover {
+    background: var(--color-gray);
+  }
+
+  .ui.button.signOut:hover {
+    background: var(--color-gray);
+  }
+
   header button.ui.button.newTab {
     margin: 0.25em auto 0 0.25em;
   }

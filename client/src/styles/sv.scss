@@ -1,28 +1,132 @@
-// .ui.active.modal {
-//   height: 75%;
-//   background-color: pink;
+.ui.modal.transition.visible.active {
+  background: var(--color-darkgray);
+  height: 70vh;
 
-//   header {
-//     background-color: pink;
-//   }
-//   div {
-//     margin: 0;
-//     padding-top: 20px;
+  form.ui.form label {
+    color: var(--color-peach);
+    margin-left: 5px;
+  }
 
-//     // .ui.items {
-//     //   height: 100%;
+  div.ui.fluid.input input::placeholder {
+    color: var(--color-peach);
+  }
+  .ui.form input::placeholder {
+    color: var(--color-peach);
+  }
+  .ui.form input {
+    margin-right: 5px;
+  }
+  div.ui.fluid.input input {
+    margin-left: 5px;
+  }
 
-//     //   .ui.item {
-//     //     height: 100%;
-//   }
+  div.ui.basic.label {
+    background: transparent;
+    color: var(--color-peach);
+    width: 3px;
+    margin-left: -20px;
+  }
+
+  div.header {
+    background: var(--red-background);
+    color: var(--color-peach);
+  }
+
+  .ui.items .item .content div {
+    color: var(--color-peach);
+  }
+
+  .ui.form .field .ui.input input,
+  .ui.form .fields .field .ui.input input {
+    background: transparent;
+    border: 1px solid var(--color-gray);
+    color: var(--color-peach);
+  }
+  div.actions {
+    background: transparent;
+  }
+  div.actions button {
+    background: transparent;
+    color: var(--color-peach);
+  }
+
+  div.actions button:hover {
+    background: var(--color-red);
+    color: var(--color-peach);
+  }
+  div.field textarea {
+    background: transparent;
+    border: 1px solid var(--color-gray);
+    width: 890px;
+    margin-left: 5px;
+  }
+
+  div.field textarea::placeholder {
+    color: var(--color-peach);
+  }
+}
+
+.ui.button {
+  background: var(--color-darkgray);
+  color: var(--color-peach);
+  border: 1px solid var(--color-gray);
+}
+
+// .ui.button.ExtV {
+//   position: relative;
+//   left: 623px;
+//   bottom: 20px;
 // }
 
-.ui.modal.transition.visible.active {
-  background: pink;
-  height: 50%;
+.ui.button.ExtV:hover {
+  background: var(--color-red);
+  color: var(--color-peach);
+}
 
-  .header,
-  .actions {
-    background: pink;
+.button.ui.button:hover {
+  background: var(--color-red);
+  color: var(--color-peach);
+}
+
+.search {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1em;
+  position: relative;
+  width: 1072px;
+  left: 367px;
+  top: 14px;
+
+  .button {
+    background: var(--color-darkgray);
+    border: 1px solid var(--color-gray);
+    color: var(--color-peach);
   }
+
+  .button:hover {
+    background: var(--color-red);
+  }
+}
+
+.search.input input {
+  background: var(--color-darkgray);
+  color: var(--color-peach);
+  border: 1px solid var(--color-gray);
+}
+
+.search.input input::placeholder {
+  color: var(--color-peach);
+}
+
+p.quantity {
+  position: relative;
+  right: 625px;
+  top: 85px;
+}
+
+i.icon.deleteItem {
+  color: var(--color-peach);
+  position: relative;
+  top: 30px;
+  font-size: 15px;
 }
