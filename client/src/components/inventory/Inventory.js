@@ -58,11 +58,18 @@ export default props => {
     <div className="inventory">
       <header>
         <h1>{profile.username}</h1>
-        <Button onClick={e => signout()}>Sign out</Button>
+        <Button className="signOut" onClick={e => signout()}>
+          Sign out
+        </Button>
         <NewCat />
       </header>
       <br />
-      <Input onInput={handleSearch} action="search" placeholder="Search..." />
+      <Input
+        className="search"
+        onInput={handleSearch}
+        action="search"
+        placeholder="Search..."
+      />
       <Tab
         menu={{ fluid: true, vertical: true, tabular: true }}
         panes={panes}
