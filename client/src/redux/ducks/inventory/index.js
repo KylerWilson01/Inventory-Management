@@ -63,7 +63,7 @@ function addPicture(picture) {
   return dispatch => {
     axios
       .post("/api/upload", picture, config)
-      .then(resp => {})
+      .then(resp => { })
       .catch(err => console.log(err))
   }
 }
@@ -84,7 +84,6 @@ function addInventory(form, catid, picture) {
 }
 
 function deleteItem(id) {
-  console.log(id)
   return dispatch => {
     api.delete("/inventory/" + id).then(resp => {
       dispatch({

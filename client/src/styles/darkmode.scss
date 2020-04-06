@@ -1,0 +1,125 @@
+.dark-mode {
+  height: 100vh;
+  width: 100vw;
+  background: var(--red-background);
+
+  header {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+
+    .ui.button {
+      margin: 0.5em 0.5em 0;
+      background: transparent;
+      border: 1px solid var(--color-lightred);
+      color: var(--color-peach);
+    }
+
+    .ui.button:hover {
+      background: var(--color-gray);
+      color: var(--color-peach);
+    }
+  }
+
+  .search-bar {
+    display: flex;
+    justify-content: flex-end;
+
+    .ui.input.search {
+      width: 74.5vw;
+      margin: 0;
+
+      input {
+        background: var(--color-darkgray);
+        color: var(--color-peach);
+        border: 1px solid var(--color-gray);
+        width: 100%;
+      }
+
+      input::placeholder {
+        color: var(--color-peach);
+      }
+    }
+  }
+
+  div.ui.grid .four.wide.column .ui.fluid.menu {
+    background: var(--color-darkgray);
+    border-radius: var(--border-radius);
+    border-right: none;
+
+    a.item {
+      color: var(--color-peach);
+
+      i.close.icon {
+        opacity: 0;
+      }
+    }
+
+    a.item:hover i.close.icon {
+      opacity: 1;
+      color: var(--color-lightred);
+    }
+
+    a.item.active {
+      background: var(--color-gray);
+      border: 1px solid var(--color-red);
+      font-size: 1.2rem;
+    }
+  }
+
+  .stretched.twelve.wide.column {
+    .ui.button {
+      background: var(--color-darkgray);
+      color: var(--color-peach);
+      border: 1px solid var(--color-gray);
+    }
+
+    .ui.button:hover {
+      background: var(--color-red);
+    }
+
+    .ui.bottom.attached.segment.active.tab {
+      border-radius: var(--border-radius);
+      background: var(--color-darkgray);
+      color: var(--color-peach);
+      border: 1px solid var(--color-darkgray);
+
+      .ui.internally.celled .row .column:first-child {
+        box-shadow: none;
+      }
+
+      .ui.internally.celled .column {
+        box-shadow: -1px 0 0 0 transparent;
+        border-bottom: 1px solid var(--color-red);
+
+        header {
+          display: flex;
+          flex-direction: row;
+
+          h1,
+          h2 {
+            margin: 0;
+          }
+        }
+      }
+
+      .ui.internally.celled .column:last-child {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+      }
+    }
+  }
+
+  .menu {
+    height: 80vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+
+  .tab {
+    height: 80vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+}
