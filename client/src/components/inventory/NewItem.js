@@ -42,7 +42,12 @@ export default props => {
 
     addPic(data)
     post(form, this.id, name)
-    setForm({})
+    setForm({
+      name: "",
+      price: "",
+      description: "",
+      quantity: ""
+    })
     setImage(null)
     setLabel("Choose a file")
   }

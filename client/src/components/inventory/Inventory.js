@@ -6,7 +6,7 @@ import "../../styles/darkmode.scss"
 import "../../styles/lightmode.scss"
 
 import NewCat from "./NewCat"
-import Cat from "./Cat"
+import Cat from "./NewItem"
 
 export default props => {
   const { profile, signout } = useAuth()
