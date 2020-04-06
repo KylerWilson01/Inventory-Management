@@ -53,7 +53,7 @@ router.get('/search/:username/:item', (req, res, next) => {
   const username = req.params.username
 
   const searchSql = `
-  SELECT c.name as cat, c.id, i.name, i.price, i.quantity, i.description, i.id as itemid
+  SELECT c.name as cat, c.id, i.name, i.price, i.quantity, i.description, i.id as itemid, i.picture
   FROM users u
   LEFT JOIN categories c
   ON u.id = c.user_id
@@ -74,7 +74,8 @@ router.get('/search/:username/:item', (req, res, next) => {
             price: item.price,
             quantity: item.quantity,
             description: item.description,
-            id: item.itemid
+            id: item.itemid,
+            picture: item.picture
           })
       } else {
         data.results.push({
@@ -86,7 +87,8 @@ router.get('/search/:username/:item', (req, res, next) => {
               price: item.price,
               quantity: item.quantity,
               description: item.description,
-              id: item.itemid
+              id: item.itemid,
+              picture: item.picture
             }
           ]
         })

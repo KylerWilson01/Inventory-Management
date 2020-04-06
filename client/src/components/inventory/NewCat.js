@@ -42,7 +42,7 @@ export default props => {
         </Form>
       }
       actions={[
-        { key: "done", content: "Add", positive: true, onClick: handleSubmit }
+        { key: "add-2", content: "Add", positive: true, onClick: handleSubmit }
       ]}
     />
   )

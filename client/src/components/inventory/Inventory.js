@@ -15,7 +15,8 @@ export default props => {
 
   useEffect(() => {
     localStorage.setItem('mode', JSON.stringify(darkMode))
-  }, [darkMode])
+    getCats(profile.username)
+  }, [categories.length, darkMode])
 
   function getInitialMode() {
     const colorMode = JSON.parse(localStorage.getItem('mode'))
@@ -25,6 +26,7 @@ export default props => {
   function handleCatDel(e) {
     e.preventDefault()
     delCat(this.id)
+    getCats(profile.username)
   }
 
   function handleSearch(e) {
@@ -72,6 +74,7 @@ export default props => {
           trigger={<Button>{profile.username}</Button>}
           header='User Settings'
           closeIcon
+          className={darkMode ? 'dark' : 'light'}
           content={
             <>
               <Button
@@ -81,17 +84,18 @@ export default props => {
               <Button onClick={e => signout()}>Sign out</Button>
             </>
           }
-          actions={['Snooze', { key: 'done', content: 'Done', positive: true }]}
+          actions={[{ key: 'done', content: 'Done', positive: true }]}
         />
         <NewCat />
       </header>
       <br />
-      <Input
-        className="search"
-        onInput={handleSearch}
-        action="search"
-        placeholder="Search..."
-      />
+      <div className="search-bar">
+        <Input
+          className="search"
+          onInput={handleSearch}
+          placeholder="Search..."
+        />
+      </div>
       <Tab
         menu={{ fluid: true, vertical: true, tabular: true }}
         panes={panes}

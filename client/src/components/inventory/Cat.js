@@ -49,85 +49,79 @@ export default props => {
 
   return (
     <Tab.Pane>
-      <div className="searchbar">
-        <Modal
-          trigger={
-            <Button onClick={e => e.preventDefault()}>Add a New Item</Button>
+      <Modal
+        trigger={
+          <Button onClick={e => e.preventDefault()}>Add a New Item</Button>
+        }
+        header="Add Item"
+        content={
+          <Form>
+            <Form.Group widths="equal">
+              <Form.Field>
+                <label>Item Name</label>
+                <Input
+                  onInput={e => handleChange(e, "name")}
+                  fluid
+                  placeholder="Orange"
+                />
+              </Form.Field>
+              <Form.Field>
+                <label>Quantity</label>
+                <Input
+                  onInput={e => handleChange(e, "quantity")}
+                  fluid
+                  type="number"
+                  placeholder="5"
+                />
+              </Form.Field>
+              <Form.Field>
+                <label>Price $</label>
+                <Input
+                  onInput={e => handleChange(e, "price")}
+                  placeholder="6.8"
+                />
+              </Form.Field>
+              <Form.Field>
+                <label htmlFor="file" name="label">
+                  {label}
+                </label>
+                <Input
+                  id="file"
+                  type="file"
+                  name="image"
+                  onChange={e =>
+                    setImage(
+                      e.target.files[0],
+                      setLabel(e.target.files[0].name)
+                    )
+                  }
+                  fluid
+                  accept="image/png, image/jpeg"
+                />
+              </Form.Field>
+            </Form.Group>
+            <Form.TextArea
+              onChange={e => handleChange(e, "description")}
+              label="Description"
+              placeholder="Tell us about your item..."
+            />
+          </Form>
+        }
+        actions={[
+          {
+            key: "add",
+            content: "Add",
+            positive: true,
+            onClick: handlePost,
+            id: cat.id
           }
-          header="Add Item"
-          content={
-            <Form>
-              <Form.Group widths="equal">
-                <Form.Field>
-                  <label>Item Name</label>
-                  <Input
-                    onInput={e => handleChange(e, "name")}
-                    fluid
-                    placeholder="Orange"
-                  />
-                </Form.Field>
-                <Form.Field>
-                  <label>Quantity</label>
-                  <Input
-                    onInput={e => handleChange(e, "quantity")}
-                    fluid
-                    type="number"
-                    placeholder="5"
-                  />
-                </Form.Field>
-                <Form.Field>
-                  <label>Price</label>
-                  <Input
-                    onInput={e => handleChange(e, "price")}
-                    labelPosition="right"
-                    placeholder="6.8"
-                  >
-                    <Label basic>$</Label>
-                    <input />
-                  </Input>
-                </Form.Field>
-                <Form.Field>
-                  <label htmlFor="file" name="label">
-                    {label}
-                  </label>
-                  <Input
-                    id="file"
-                    type="file"
-                    name="image"
-                    onChange={e =>
-                      setImage(
-                        e.target.files[0],
-                        setLabel(e.target.files[0].name)
-                      )
-                    }
-                    fluid
-                    accept="image/png, image/jpeg"
-                  />
-                </Form.Field>
-              </Form.Group>
-              <Form.TextArea
-                onChange={e => handleChange(e, "description")}
-                label="Description"
-                placeholder="Tell us about your item..."
-              />
-            </Form>
-          }
-          actions={[
-            {
-              key: "done",
-              content: "Add",
-              positive: true,
-              onClick: handlePost,
-              id: cat.id
-            }
-          ]}
-        />
-      </div>
+        ]}
+      />
       {cat.inventory[0].name ? (
         cat.inventory.map((item, i) => <Items item={item} key={"item-" + i} />)
       ) : (
-        <h1>Please Enter an Item</h1>
-      )}
+          <h1>Please Enter an Item</h1>
+        )}
     </Tab.Pane>
   )
 }

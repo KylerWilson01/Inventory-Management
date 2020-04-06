@@ -63,7 +63,7 @@ function addPicture(picture) {
   return dispatch => {
     axios
       .post("/api/upload", picture, config)
-      .then(resp => {})
+      .then(resp => { })
       .catch(err => console.log(err))
   }
 }
