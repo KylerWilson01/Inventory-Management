@@ -5,7 +5,7 @@ import logo from "../../assets/logo.png"
 import NewCat from "./NewCat"
 import Cat from "./NewItem"
 
-export default props => {
+export default (props) => {
   const { profile, signout } = useAuth()
   const { categories, results, delCat, getCats, search } = useCats()
   const [darkMode, setDarkMode] = useState(getInitialMode())
@@ -48,7 +48,7 @@ export default props => {
           <Tab.Pane>
             <Cat mode={darkMode} props={cat} />
           </Tab.Pane>
-        )
+        ),
       }))
     : categories.map((cat, i) => ({
         menuItem: (
@@ -61,7 +61,7 @@ export default props => {
           <Tab.Pane>
             <Cat mode={darkMode} props={cat} />
           </Tab.Pane>
-        )
+        ),
       }))
 
   return (
@@ -74,15 +74,17 @@ export default props => {
           className={darkMode ? "dark" : "light"}
           content={
             <>
-              <Button
-                className="user"
-                onClick={e => setDarkMode(prevMode => !prevMode)}
-              >
-                {darkMode ? "Change to light mode" : "Change to dark mode"}
-              </Button>
-              <Button className="user" onClick={e => signout()}>
-                Sign out
-              </Button>
+              <div className="settingsWrapper">
+                <Button
+                  className="user"
+                  onClick={(e) => setDarkMode((prevMode) => !prevMode)}
+                >
+                  {darkMode ? "Change to light mode" : "Change to dark mode"}
+                </Button>
+                <Button className="user" onClick={(e) => signout()}>
+                  Sign out
+                </Button>
+              </div>
             </>
           }
           actions={[{ key: "done", content: "Done", positive: true }]}

@@ -3,20 +3,20 @@
   width: 100vw;
   background: var(--light-background);
 
-  img {
-    width: 7vw;
-    margin: 0.5em 0.5em 0;
-  }
-
   header {
     display: flex;
     flex-direction: row-reverse;
     justify-content: space-between;
 
+    img {
+      width: 7vw;
+      margin: 0.5em 0.5em 0;
+    }
+
     .ui.button {
       margin: 0.5em 0.5em 0;
       background: transparent;
-      border: 1px solid var(--color-browngray);
+      border: 1px solid var(--color-lightgreen);
       color: var(--color-lightblack);
     }
 

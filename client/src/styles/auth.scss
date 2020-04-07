@@ -1,15 +1,44 @@
 .auth {
-  background: var(--color-darkgray);
   height: 100vh;
+  background: var(--color-darkgray);
+
+  .homeWrapper {
+    position: relative;
+    height: 90vh;
+
+    .background {
+      background-image: url("../assets/Homebg.png");
+      width: 100%;
+      background-size: cover;
+      filter: blur(8px);
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      right: 0;
+      left: 0;
+    }
+  }
+
+  .logo-wrapper {
+    width: 27vw;
+    margin: auto;
+    padding: 25px;
+    position: relative;
+
+    img {
+      width: 20vw;
+    }
+  }
 
   .authWrapper {
     width: 500px;
-    margin: 100px auto 0;
+    margin: 50px auto 0;
 
     .ui.secondary.menu {
       .item {
         border: 1px solid var(--color-gray);
         color: var(--color-peach);
+        background: var(--color-gray);
       }
 
       .active.item {

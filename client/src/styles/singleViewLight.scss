@@ -1,6 +1,24 @@
 .light.ui.modal.transition.visible.active {
   background: var(--color-white);
 
+  .settingsWrapper {
+    display: flex;
+    justify-content: space-around;
+    margin: 1em;
+
+    button.ui.button.user {
+      background: transparent;
+      color: var(--color-lightblack);
+      // border: 1px solid var(--color-red);
+    }
+
+    button.ui.button.user:hover {
+      color: var(--color-lightblack);
+      background: var(--color-green);
+      // border: 1px solid var(--color-darkgray);
+    }
+  }
+
   form.ui.form label {
     color: var(--color-lightblack);
     margin-left: 5px;
@@ -65,5 +83,8 @@
   }
   div.ui.medium.image {
     margin-bottom: 1em;
+  }
+  .actions {
+    border-top: transparent;
   }
 }
