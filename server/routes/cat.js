@@ -4,7 +4,7 @@ const conn = require("../db")
 
 router.get("/categories/:username", (req, res, next) => {
   const sql = `
-  SELECT c.name as cat, c.id, i.name, i.price, i.quantity, i.description, i.id as itemid, i.picture
+  SELECT c.name as cat, c.id, i.name, i.pricePerPackage, i.packageQuantity, i.itemQuantity, i.description, i.id as itemid, i.picture, i.quantityPerPackage
   FROM users u
   LEFT JOIN categories c
   ON u.id = c.user_id
@@ -22,11 +22,13 @@ router.get("/categories/:username", (req, res, next) => {
           .find(cat => cat.cat === item.cat)
           .inventory.push({
             name: item.name,
-            price: item.price,
-            quantity: item.quantity,
+            pricePerPackage: item.pricePerPackage,
+            packageQuantity: item.packageQuantity,
+            itemQuantity: item.itemQuantity,
             description: item.description,
             id: item.itemid,
-            picture: item.picture
+            picture: item.picture,
+            quantityPerPackage: item.quantityPerPackage
           })
       } else {
         data.cats.push({
@@ -35,11 +37,13 @@ router.get("/categories/:username", (req, res, next) => {
           inventory: [
             {
               name: item.name,
-              price: item.price,
-              quantity: item.quantity,
+              pricePerPackage: item.pricePerPackage,
+              packageQuantity: item.packageQuantity,
+              itemQuantity: item.itemQuantity,
               description: item.description,
               id: item.itemid,
-              picture: item.picture
+              picture: item.picture,
+              quantityPerPackage: item.quantityPerPackage
             }
           ]
         })
@@ -54,7 +58,7 @@ router.get("/search/:username/:item", (req, res, next) => {
   const username = req.params.username
 
   const searchSql = `
-  SELECT c.name as cat, c.id, i.name, i.price, i.quantity, i.description, i.id as itemid, i.picture
+  SELECT c.name as cat, c.id, i.name, i.pricePerPackage, i.packageQuantity, i.itemQuantity, i.description, i.id as itemid, i.picture, i.quantityPerPackage
   FROM users u
   LEFT JOIN categories c
   ON u.id = c.user_id
@@ -72,11 +76,13 @@ router.get("/search/:username/:item", (req, res, next) => {
           .find(cat => cat.cat === item.cat)
           .inventory.push({
             name: item.name,
-            price: item.price,
-            quantity: item.quantity,
+            pricePerPackage: item.pricePerPackage,
+            packageQuantity: item.packageQuantity,
+            itemQuantity: item.itemQuantity,
             description: item.description,
             id: item.itemid,
-            picture: item.picture
+            picture: item.picture,
+            quantityPerPackage: item.quantityPerPackage
           })
       } else {
         data.results.push({
@@ -85,11 +91,13 @@ router.get("/search/:username/:item", (req, res, next) => {
           inventory: [
             {
               name: item.name,
-              price: item.price,
-              quantity: item.quantity,
+              pricePerPackage: item.pricePerPackage,
+              packageQuantity: item.packageQuantity,
+              itemQuantity: item.itemQuantity,
               description: item.description,
               id: item.itemid,
-              picture: item.picture
+              picture: item.picture,
+              quantityPerPackage: item.quantityPerPackage
             }
           ]
         })

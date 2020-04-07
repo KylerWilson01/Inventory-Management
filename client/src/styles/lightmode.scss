@@ -9,18 +9,18 @@
 
     h1 {
       margin: 10px;
-      color: var(--color-peach);
+      color: var(--color-lightblack);
     }
 
     .button {
       background: transparent;
       border: 1px solid var(--color-lightred);
-      color: var(--color-peach);
+      color: var(--color-lightblack);
     }
 
     .button:hover {
       background: var(--color-gray);
-      color: var(--color-peach);
+      color: var(--color-lightblack);
     }
   }
 
@@ -38,7 +38,7 @@
     border-right: none;
 
     a.item {
-      color: var(--color-peach);
+      color: var(--color-lightblack);
 
       i.close.icon {
         opacity: 0;
@@ -61,7 +61,7 @@
     .ui.bottom.attached.segment.active.tab {
       border-radius: var(--border-radius);
       background: var(--color-darkgray);
-      color: var(--color-peach);
+      color: var(--color-lightblack);
       border: 1px solid var(--color-darkgray);
 
       .searchbar {
@@ -72,7 +72,7 @@
         .button {
           background: transparent;
           border: 1px solid var(--color-gray);
-          color: var(--color-peach);
+          color: var(--color-lightblack);
         }
 
         .button:hover {
@@ -81,7 +81,7 @@
 
         .input input {
           background: transparent;
-          color: var(--color-peach);
+          color: var(--color-lightblack);
           border: 1px solid var(--color-gray);
         }
       }
@@ -111,7 +111,7 @@
         .button {
           background: transparent;
           border: 1px solid var(--color-gray);
-          color: var(--color-peach);
+          color: var(--color-lightblack);
         }
 
         .button:hover {
@@ -122,7 +122,7 @@
           width: 50%;
           background: transparent;
           border: 1px solid var(--color-gray);
-          color: var(--color-peach);
+          color: var(--color-lightblack);
         }
       }
     }
