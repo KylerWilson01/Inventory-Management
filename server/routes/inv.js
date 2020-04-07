@@ -36,11 +36,11 @@ router.post("/upload", (req, res, next) => {
 
   var uploader = client.uploadFile(params)
 
-  uploader.on("error", function(err) {
+  uploader.on("error", function (err) {
     console.error("unable to upload:", err.stack)
   })
 
-  uploader.on("end", function() {
+  uploader.on("end", function () {
     console.log("done uploading")
   })
 
