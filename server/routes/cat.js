@@ -14,7 +14,6 @@ router.get("/categories/:username", (req, res, next) => {
   `
 
   conn.query(sql, [req.params.username], (err, results, fields) => {
-    console.log(results)
     let data = { cats: [] }
     results.forEach(item => {
       if (data.cats.filter(cat => cat.cat === item.cat).length > 0) {

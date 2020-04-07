@@ -85,7 +85,6 @@ router.post("/inventory", (req, res, next) => {
 })
 
 router.patch("/inventory", (req, res, next) => {
-  console.log(req.body.form)
   const updateSql = `
   UPDATE inventory 
   SET name = ?, packageQuantity = ?, itemQuantity = ?, pricePerPackage = ?, description = ?, quantityPerPackage = ?
