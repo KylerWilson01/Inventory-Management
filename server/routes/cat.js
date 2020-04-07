@@ -14,6 +14,7 @@ router.get("/categories/:username", (req, res, next) => {
   `
 
   conn.query(sql, [req.params.username], (err, results, fields) => {
+    console.log(results)
     let data = { cats: [] }
     results.forEach(item => {
       if (data.cats.filter(cat => cat.cat === item.cat).length > 0) {
@@ -52,7 +53,7 @@ router.get("/categories/:username", (req, res, next) => {
   })
 })
 
-router.get('/search/:username/:item', (req, res, next) => {
+router.get("/search/:username/:item", (req, res, next) => {
   const item = `%${req.params.item}%`
   const username = req.params.username
 
@@ -104,8 +105,6 @@ router.get('/search/:username/:item', (req, res, next) => {
     })
     res.json(data)
   })
-
-
 })
 
 router.post("/categories/:username", (req, res, next) => {

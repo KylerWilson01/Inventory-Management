@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import {
   Grid,
   Image,
@@ -9,7 +9,6 @@ import {
   Form
 } from "semantic-ui-react"
 import { useInventory } from "../../hooks"
-import "../../styles/sv.scss"
 
 export default props => {
   const { update, del } = useInventory()
@@ -21,12 +20,6 @@ export default props => {
     quantityPerPackage: props.item.quantityPerPackage,
     itemQuantity: props.item.itemQuantity
   })
-  const [darkMode, setDarkMode] = useState(getInitialMode())
-
-  function getInitialMode() {
-    const colorMode = JSON.parse(localStorage.getItem('mode'))
-    return colorMode ? colorMode : true
-  }
 
   const img = props.item.picture
     ? `https://inventory-management-project.s3.amazonaws.com/${props.item.picture}`
@@ -67,12 +60,15 @@ export default props => {
         <Grid.Column width={10}>
           <header>
             <h1>{props.item.name}</h1>
-            <h2>Quantity: {(props.item.packageQuantity * props.item.quantityPerPackage) + props.item.itemQuantity}</h2>
+            <h2>
+              Quantity:{" "}
+              {props.item.packageQuantity * props.item.quantityPerPackage +
+                props.item.itemQuantity}
+            </h2>
           </header>
           <p>{props.item.description}</p>
         </Grid.Column>
         <Grid.Column width={3}>
-
           {/* Update Item */}
 
           <Modal
@@ -80,7 +76,7 @@ export default props => {
               <Button onClick={e => e.preventDefault}>Update item</Button>
             }
             header={`Update ${props.item.name}`}
-            className={darkMode ? 'dark' : 'light'}
+            className={props.mode ? "dark" : "light"}
             content={
               <Form>
                 <Form.Group widths="equal">
@@ -93,7 +89,7 @@ export default props => {
                     />
                   </Form.Field>
                 </Form.Group>
-                <Form.Group widths='equal'>
+                <Form.Group widths="equal">
                   <Form.Field>
                     <label>Price per Package</label>
                     <Input
@@ -164,31 +160,42 @@ export default props => {
 
           <Modal
             trigger={
-              <Button onClick={e => e.preventDefault()}>
-                Expanded view
-              </Button>
+              <Button onClick={e => e.preventDefault()}>Expanded view</Button>
             }
             header={props.item.name}
-            className={darkMode ? 'dark' : 'light'}
+            className={props.mode ? "dark" : "light"}
             content={
               <Item.Group>
                 <Item>
-                  <Item.Image size="large" src={img} />
+                  <Item.Image size="medium" src={img} />
                   <Item.Content>
                     <Item.Meta>
-                      <p>Quantity: {(props.item.packageQuantity * props.item.quantityPerPackage) + props.item.itemQuantity}</p>
+                      <p>
+                        Quantity:{" "}
+                        {props.item.packageQuantity *
+                          props.item.quantityPerPackage +
+                          props.item.itemQuantity}
+                      </p>
                     </Item.Meta>
                     <Item.Meta>
                       <span>
                         $
-                        {
-                          Number(((props.item.packageQuantity * props.item.quantityPerPackage) + props.item.itemQuantity) * (props.item.pricePerPackage / props.item.quantityPerPackage)).toFixed(2)
-                        }
+                        {Number(
+                          (props.item.packageQuantity *
+                            props.item.quantityPerPackage +
+                            props.item.itemQuantity) *
+                            (props.item.pricePerPackage /
+                              props.item.quantityPerPackage)
+                        ).toFixed(2)}
                       </span>
                     </Item.Meta>
                     <Item.Meta>
                       <span>
-                        ${Number(props.item.pricePerPackage / props.item.quantityPerPackage).toFixed(2)}{" "}
+                        $
+                        {Number(
+                          props.item.pricePerPackage /
+                            props.item.quantityPerPackage
+                        ).toFixed(2)}{" "}
                         per {props.item.name}
                       </span>
                     </Item.Meta>

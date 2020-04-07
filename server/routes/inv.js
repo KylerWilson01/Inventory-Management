@@ -18,8 +18,8 @@ const client = s3.createClient({
 })
 
 router.post("/upload", (req, res, next) => {
+  console.log("FILES", req.files)
   if (!req.files || Object.keys(req.files).length === 0) {
-    console.log([...Object.keys(req)])
     res.status(400).json({ message: "No files were uploaded." })
     return
   }

@@ -1,10 +1,7 @@
 import React, { useState, useEffect } from "react"
 import { useAuth, useCats } from "../../hooks"
 import { Tab, Button, Icon, Menu, Input, Modal } from "semantic-ui-react"
-
-import "../../styles/darkmode.scss"
-import "../../styles/lightmode.scss"
-
+import logo from "../../assets/logo.png"
 import NewCat from "./NewCat"
 import Cat from "./NewItem"
 
@@ -20,7 +17,7 @@ export default props => {
 
   function getInitialMode() {
     const colorMode = JSON.parse(localStorage.getItem("mode"))
-    return colorMode ? colorMode : true
+    return colorMode
   }
 
   function handleCatDel(e) {
@@ -49,7 +46,7 @@ export default props => {
         ),
         render: () => (
           <Tab.Pane>
-            <Cat props={cat} />
+            <Cat mode={darkMode} props={cat} />
           </Tab.Pane>
         )
       }))
@@ -62,7 +59,7 @@ export default props => {
         ),
         render: () => (
           <Tab.Pane>
-            <Cat props={cat} />
+            <Cat mode={darkMode} props={cat} />
           </Tab.Pane>
         )
       }))
@@ -77,18 +74,24 @@ export default props => {
           className={darkMode ? "dark" : "light"}
           content={
             <>
-              <Button onClick={e => setDarkMode(prevMode => !prevMode)}>
+              <Button
+                className="user"
+                onClick={e => setDarkMode(prevMode => !prevMode)}
+              >
                 {darkMode ? "Change to light mode" : "Change to dark mode"}
               </Button>
-              <Button onClick={e => signout()}>Sign out</Button>
+              <Button className="user" onClick={e => signout()}>
+                Sign out
+              </Button>
             </>
           }
           actions={[{ key: "done", content: "Done", positive: true }]}
         />
-        <NewCat />
+        <img src={logo} />
       </header>
       <br />
       <div className="search-bar">
+        <NewCat mode={darkMode} />
         <Input
           className="search"
           onInput={handleSearch}

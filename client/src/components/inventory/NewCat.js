@@ -1,9 +1,9 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import { Form, Input, Button, Modal } from "semantic-ui-react"
 import { useAuth, useCats } from "../../hooks"
-import "../../styles/sv.scss"
 
 export default props => {
+  console.log(props)
   const { profile } = useAuth()
   const { addCat } = useCats()
   const [cat, setCat] = useState({
@@ -27,6 +27,7 @@ export default props => {
     <Modal
       trigger={<Button className="newTab">Add a New Tab</Button>}
       header="Add a New Tab"
+      className={props.mode ? "dark" : "light"}
       content={
         <Form>
           <Form.Group widths="equal">
