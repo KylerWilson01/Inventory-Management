@@ -6,7 +6,19 @@ html {
   --color-darkgray: #252525;
   --color-gray: #3a3a3a;
   --color-peach: #fae7cb;
+  --color-lightgreen: #7fcd91;
+  --color-lightergreen: #94d3ac;
+  --color-green: #21bf73;
+  --color-browngray: #655c56;
+  --color-lightblack: #4d4646;
+  --color-lightgray: #5b5656;
   --red-background: linear-gradient(var(--color-red), black);
+  --light-background: linear-gradient(
+    var(--color-green),
+    var(--color-lightgreen),
+    var(--color-lightergreen) whitesmoke,
+    white
+  );
   --border-radius: 10px;
 }
 
