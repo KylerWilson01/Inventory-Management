@@ -1,0 +1,69 @@
+.light.ui.modal.transition.visible.active {
+  background: var(--color-white);
+
+  form.ui.form label {
+    color: var(--color-lightblack);
+    margin-left: 5px;
+  }
+
+  div.ui.fluid.input input::placeholder {
+    color: var(--color-lightblack);
+  }
+  .ui.form input::placeholder {
+    color: var(--color-lightblack);
+  }
+  .ui.form input {
+    margin-right: 5px;
+  }
+  div.ui.fluid.input input {
+    margin-left: 5px;
+  }
+
+  div.ui.basic.label {
+    background: transparent;
+    color: var(--color-lightblack);
+    width: 3px;
+    margin-left: -20px;
+  }
+
+  div.header {
+    background: var(--light-background);
+    color: var(--color-lightblack);
+  }
+
+  .ui.items .item .content div {
+    color: var(--color-lightblack);
+  }
+
+  .ui.form .field .ui.input input,
+  .ui.form .fields .field .ui.input input {
+    background: transparent;
+    border: 1px solid var(--color-browngray);
+    color: var(--color-lightblack);
+  }
+  div.actions {
+    background: transparent;
+  }
+  div.actions button {
+    background: transparent;
+    color: var(--color-lightblack);
+  }
+
+  div.actions button:hover {
+    background: var(--color-green);
+    color: var(--color-lightblack);
+  }
+  div.field textarea {
+    background: transparent;
+    border: 1px solid var(--color-browngray);
+    width: 890px;
+    margin-left: 5px;
+  }
+
+  div.field textarea::placeholder {
+    color: var(--color-lightblack);
+  }
+  div.ui.medium.image {
+    margin-bottom: 1em;
+  }
+}

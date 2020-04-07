@@ -11,12 +11,14 @@ html {
   --color-green: #21bf73;
   --color-browngray: #655c56;
   --color-lightblack: #4d4646;
-  --color-lightgray: #5b5656;
+  --color-lightgray: lightgray;
+  --color-white: rgb(238, 235, 235);
   --red-background: linear-gradient(var(--color-red), black);
   --light-background: linear-gradient(
     var(--color-green),
     var(--color-lightgreen),
-    var(--color-lightergreen) whitesmoke,
+    var(--color-lightergreen),
+    whitesmoke,
     white
   );
   --border-radius: 10px;

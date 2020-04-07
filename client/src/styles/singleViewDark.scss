@@ -1,6 +1,5 @@
-.ui.modal.transition.visible.active {
+.dark.ui.modal.transition.visible.active {
   background: var(--color-darkgray);
-  height: 70vh;
 
   form.ui.form label {
     color: var(--color-peach);
@@ -63,5 +62,12 @@
 
   div.field textarea::placeholder {
     color: var(--color-peach);
+  }
+
+  div.ui.medium.image {
+    margin-bottom: 1em;
+  }
+
+  .ui.button.user {
   }
 }
