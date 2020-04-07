@@ -14,9 +14,9 @@ export default props => {
   const [form, setForm] = useState({
     name: "",
     description: "",
-    quantityPackage: "",
+    packageQuantity: "",
     quantityPerPackage: "",
-    quantityItem: "",
+    itemQuantity: "",
     pricePerPackage: ""
   })
 
@@ -34,27 +34,27 @@ export default props => {
     e.preventDefault()
 
     let validPost = true
-    if (form.name == '') {
+    if (form.name === '') {
       validPost = false
     }
 
-    if (form.description == '') {
+    if (form.description === '') {
       validPost = false
     }
 
-    if (form.quantityPackage == '' || form.quantityPackage == '0') {
+    if (form.packageQuantity === '' || form.packageQuantity === '0') {
       validPost = false
     }
 
-    if (form.quantityPerPackage == '' || form.quantityPerPackage == '0') {
+    if (form.quantityPerPackage === '' || form.quantityPerPackage === '0') {
       validPost = false
     }
 
-    if (form.quantityItem == '' || form.quantityItem == '0') {
+    if (form.itemQuantity === '') {
       validPost = false
     }
 
-    if (form.pricePerPackage == '' || form.pricePerPackage == '0') {
+    if (form.pricePerPackage === '' || form.pricePerPackage === '0') {
       validPost = false
     }
 
@@ -76,14 +76,26 @@ export default props => {
       post(form, this.id, name)
       setForm({
         name: "",
-        price: "",
         description: "",
-        quantity: ""
+        packageQuantity: "",
+        quantityPerPackage: "",
+        itemQuantity: "",
+        pricePerPackage: ""
       })
       setImage(null)
       setLabel("Choose a file")
     } else {
       alert("Your item was not added due to an empty or invalid input.")
+      setForm({
+        name: "",
+        description: "",
+        packageQuantity: "",
+        quantityPerPackage: "",
+        itemQuantity: "",
+        pricePerPackage: ""
+      })
+      setImage(null)
+      setLabel("Choose a file")
     }
   }
 
@@ -128,7 +140,7 @@ export default props => {
               <Form.Field>
                 <label>Price per Package</label>
                 <Input
-                  onInput={e => handleChange(e, "price")}
+                  onInput={e => handleChange(e, "pricePerPackage")}
                   fluid
                   placeholder="6.8"
                 />
@@ -136,7 +148,7 @@ export default props => {
               <Form.Field>
                 <label>Quantity of Packages</label>
                 <Input
-                  onInput={e => handleChange(e, "quantityP")}
+                  onInput={e => handleChange(e, "packageQuantity")}
                   fluid
                   type="number"
                   placeholder="5"
@@ -154,10 +166,10 @@ export default props => {
                 />
               </Form.Field>
               <Form.Field>
-                <label>Quantity of Items</label>
+                <label>Quantity of Lose Items</label>
                 <Input
                   type="number"
-                  onInput={e => handleChange(e, "quantityItem")}
+                  onInput={e => handleChange(e, "itemQuantity")}
                   fluid
                   placeholder='100'
                 />
@@ -167,7 +179,7 @@ export default props => {
               <label>Description</label>
               <Input
                 onChange={e => handleChange(e, "description")}
-                fuild
+                fluid
                 placeholder="Tell us about your item..."
               />
             </Form.Field>
