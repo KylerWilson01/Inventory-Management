@@ -15,9 +15,11 @@ export default props => {
   const { update, del } = useInventory()
   const [form, setForm] = useState({
     name: props.item.name,
-    price: props.item.price,
     description: props.item.description,
-    quantity: props.item.quantity
+    pricePerPackage: props.item.pricePerPackage,
+    packageQuantity: props.item.packageQuantity,
+    quantityPerPackage: props.item.quantityPerPackage,
+    itemQuantity: props.item.itemQuantity
   })
   const [darkMode, setDarkMode] = useState(getInitialMode())
 
@@ -32,12 +34,15 @@ export default props => {
 
   function handleUpdate(e) {
     e.preventDefault()
+    console.log(form)
     update(form, this.id)
     setForm({
-      name: props.item.name,
-      price: props.item.price,
-      description: props.item.description,
-      quantity: props.item.quantity
+      name: form.name,
+      description: form.description,
+      pricePerPackage: form.pricePerPackage,
+      packageQuantity: form.packageQuantity,
+      quantityPerPackage: form.quantityPerPackage,
+      itemQuantity: form.itemQuantity
     })
   }
 
@@ -62,7 +67,7 @@ export default props => {
         <Grid.Column width={10}>
           <header>
             <h1>{props.item.name}</h1>
-            <h2>Quantity: {props.item.quantity}</h2>
+            <h2>Quantity: {(props.item.packageQuantity * props.item.quantityPerPackage) + props.item.itemQuantity}</h2>
           </header>
           <p>{props.item.description}</p>
         </Grid.Column>
@@ -87,42 +92,67 @@ export default props => {
                       placeholder={props.item.name}
                     />
                   </Form.Field>
+                </Form.Group>
+                <Form.Group widths='equal'>
                   <Form.Field>
-                    <label>Quantity</label>
+                    <label>Price per Package</label>
                     <Input
-                      onInput={e => handleChange(e, "quantity")}
+                      onInput={e => handleChange(e, "pricePerPackage")}
                       fluid
-                      type="number"
-                      placeholder={props.item.quantity}
+                      placeholder={props.item.pricePerPackage}
                     />
                   </Form.Field>
                   <Form.Field>
-                    <label>Price $</label>
+                    <label>Quantity of Packages</label>
                     <Input
-                      onInput={e => handleChange(e, "price")}
+                      onInput={e => handleChange(e, "packageQuantity")}
+                      fluid
                       type="number"
-                      placeholder={props.item.price}
+                      placeholder={props.item.packageQuantity}
                     />
                   </Form.Field>
                 </Form.Group>
-                <Form.TextArea
-                  onChange={e => handleChange(e, "description")}
-                  label="Description"
-                  placeholder={props.item.description}
-                />
+                <Form.Group widths="equal">
+                  <Form.Field>
+                    <label>Quantity per Package</label>
+                    <Input
+                      onInput={e => handleChange(e, "quantityPerPackage")}
+                      type="number"
+                      fluid
+                      placeholder={props.item.quantityPerPackage}
+                    />
+                  </Form.Field>
+                  <Form.Field>
+                    <label>Quantity of Lose Items</label>
+                    <Input
+                      type="number"
+                      onInput={e => handleChange(e, "itemQuantity")}
+                      fluid
+                      placeholder={props.item.itemQuantity}
+                    />
+                  </Form.Field>
+                </Form.Group>
+                <Form.Field>
+                  <label>Description</label>
+                  <Input
+                    onChange={e => handleChange(e, "description")}
+                    fluid
+                    placeholder={props.item.description}
+                  />
+                </Form.Field>
               </Form>
             }
             actions={[
               {
                 key: "delete",
-                content: "Delete",
+                content: "Delete Item",
                 positive: true,
                 onClick: handleDelete,
                 id: props.item.id
               },
               {
                 key: "update",
-                content: "Update",
+                content: "Update Item",
                 positive: true,
                 onClick: handleUpdate,
                 id: props.item.id
@@ -146,22 +176,19 @@ export default props => {
                   <Item.Image size="large" src={img} />
                   <Item.Content>
                     <Item.Meta>
-                      <p>Quantity: {props.item.quantity}</p>
+                      <p>Quantity: {(props.item.packageQuantity * props.item.quantityPerPackage) + props.item.itemQuantity}</p>
                     </Item.Meta>
                     <Item.Meta>
                       <span>
                         $
-                        {(
-                          Number(props.item.quantity) * Number(props.item.price)
-                        ).toFixed(2)}{" "}
-                        total price for {props.item.name}
+                        {
+                          Number(((props.item.packageQuantity * props.item.quantityPerPackage) + props.item.itemQuantity) * (props.item.pricePerPackage / props.item.quantityPerPackage)).toFixed(2)
+                        }
                       </span>
                     </Item.Meta>
                     <Item.Meta>
                       <span>
-                        {Number(props.item.price)
-                          ? `$${props.item.price.toFixed(2)}`
-                          : `$${props.item.price}`}{" "}
+                        ${Number(props.item.pricePerPackage / props.item.quantityPerPackage).toFixed(2)}{" "}
                         per {props.item.name}
                       </span>
                     </Item.Meta>

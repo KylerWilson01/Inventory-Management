@@ -17,20 +17,6 @@ const client = s3.createClient({
   }
 })
 
-router.get("/inventory/:catid", (req, res, next) => {
-  const sql = `
-  SELECT i.cat_id, i.name, i.price, i.quantity, i.description, i.picture
-  FROM inventory i
-  WHERE i.cat_id = ?;
-  `
-
-  conn.query(sql, [req.params.catid], (err, results, fields) => {
-    res.json({
-      results
-    })
-  })
-})
-
 router.post('/upload', (req, res, next) => {
   if (!req.files || Object.keys(req.files).length === 0) {
     console.log([...Object.keys(req)])
@@ -63,20 +49,24 @@ router.post('/upload', (req, res, next) => {
 
 router.post("/inventory", (req, res, next) => {
   const name = req.body.form.name
-  const quantity = req.body.form.quantity
-  const price = req.body.form.price
   const description = req.body.form.description
+  const packageQuantity = req.body.form.packageQuantity
+  const quantityPerPackage = req.body.form.quantityPerPackage
+  const itemQuantity = req.body.form.itemQuantity
+  const pricePerPackage = req.body.form.pricePerPackage
+
   const catid = req.body.catid
   const picture = req.body.picture ? req.body.picture : ''
 
   const insertSql = `
-    INSERT INTO inventory (name, cat_id, price, description, quantity, picture)
-    VALUES (?, ?, ?, ?, ?, ?);
+    INSERT INTO inventory 
+    (name, cat_id, pricePerPackage, description, packageQuantity, itemQuantity, picture, quantityPerPackage)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?);
     `
 
   conn.query(
     insertSql,
-    [name, catid, price, description, quantity, picture],
+    [name, catid, pricePerPackage, description, packageQuantity, itemQuantity, picture, quantityPerPackage],
     (err2, results2, fields2) => {
       res.json({
         results2
@@ -86,18 +76,25 @@ router.post("/inventory", (req, res, next) => {
 })
 
 router.patch("/inventory", (req, res, next) => {
-  const updateSql =
-    "UPDATE inventory SET quantity = ?, name = ?, price = ?, description = ? WHERE id = ?"
-  const quantity = req.body.form.quantity
+  console.log(req.body.form)
+  const updateSql = `
+  UPDATE inventory 
+  SET name = ?, packageQuantity = ?, itemQuantity = ?, pricePerPackage = ?, description = ?, quantityPerPackage = ?
+  WHERE id = ?;
+  `
+
   const name = req.body.form.name
-  const price = req.body.form.price
   const description = req.body.form.description
+  const packageQuantity = req.body.form.packageQuantity
+  const quantityPerPackage = req.body.form.quantityPerPackage
+  const itemQuantity = req.body.form.itemQuantity
+  const pricePerPackage = req.body.form.pricePerPackage
 
   const id = req.body.id
 
   conn.query(
     updateSql,
-    [quantity, name, price, description, id],
+    [name, packageQuantity, itemQuantity, pricePerPackage, description, quantityPerPackage, id],
     (err, results, fields) => {
       res.json({
         results
