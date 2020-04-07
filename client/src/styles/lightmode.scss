@@ -1,4 +1,5 @@
-.inventory {
+.light-mode {
+  height: 100vh;
   width: 100vw;
   background: var(--red-background);
 
@@ -32,7 +33,7 @@
   }
 
   div.ui.grid .four.wide.column .ui.fluid.menu {
-    background: var(--color-darkgray);
+    background: var(black);
     border-radius: var(--border-radius);
     border-right: none;
 
@@ -128,13 +129,13 @@
   }
 
   .menu {
-    height: 87vh;
+    height: 50vh;
     overflow-y: auto;
     overflow-x: hidden;
   }
 
   .tab {
-    height: 87vh;
+    height: 50vh;
     overflow-y: auto;
     overflow-x: hidden;
   }

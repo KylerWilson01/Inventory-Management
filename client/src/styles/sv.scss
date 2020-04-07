@@ -1,27 +1,67 @@
-// .ui.active.modal {
-//   height: 75%;
-//   background-color: pink;
-
-//   header {
-//     background-color: pink;
-//   }
-//   div {
-//     margin: 0;
-//     padding-top: 20px;
-
-//     // .ui.items {
-//     //   height: 100%;
-
-//     //   .ui.item {
-//     //     height: 100%;
-//   }
-// }
-
 .ui.modal.transition.visible.active {
-  background: pink;
-  height: 50%;
+  background: var(--color-darkgray);
+  height: 70vh;
 
-  header {
-    background: pink;
+  form.ui.form label {
+    color: var(--color-peach);
+    margin-left: 5px;
+  }
+
+  div.ui.fluid.input input::placeholder {
+    color: var(--color-peach);
+  }
+  .ui.form input::placeholder {
+    color: var(--color-peach);
+  }
+  .ui.form input {
+    margin-right: 5px;
+  }
+  div.ui.fluid.input input {
+    margin-left: 5px;
+  }
+
+  div.ui.basic.label {
+    background: transparent;
+    color: var(--color-peach);
+    width: 3px;
+    margin-left: -20px;
+  }
+
+  div.header {
+    background: var(--red-background);
+    color: var(--color-peach);
+  }
+
+  .ui.items .item .content div {
+    color: var(--color-peach);
+  }
+
+  .ui.form .field .ui.input input,
+  .ui.form .fields .field .ui.input input {
+    background: transparent;
+    border: 1px solid var(--color-gray);
+    color: var(--color-peach);
+  }
+  div.actions {
+    background: transparent;
+  }
+  div.actions button {
+    background: transparent;
+    color: var(--color-peach);
+  }
+
+  div.actions button:hover {
+    background: var(--color-red);
+    color: var(--color-peach);
+  }
+  div.field textarea {
+    background: transparent;
+    border: 1px solid var(--color-gray);
+    width: 890px;
+    margin-left: 5px;
+  }
+
+  div.field textarea::placeholder {
+    color: var(--color-peach);
   }
 }

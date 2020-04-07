@@ -1,9 +1,8 @@
 const express = require("express")
+const config = require("../config")
 const router = express.Router()
 const conn = require("../db")
-const config = require("../config")
 const s3 = require('@auth0/s3')
-const md5 = require('md5')
 
 const client = s3.createClient({
   maxAsyncS3: 20,
@@ -18,98 +17,90 @@ const client = s3.createClient({
   }
 })
 
-router.get("/inventory/:catid", (req, res, next) => {
-  const sql = `
-  SELECT i.cat_id, i.name, i.price, i.quantity, i.description, i.picture
-  FROM inventory i
-  WHERE i.cat_id = ?;
-  `
+router.post('/upload', (req, res, next) => {
+  if (!req.files || Object.keys(req.files).length === 0) {
+    console.log([...Object.keys(req)])
+    res.status(400).json({ message: "No files were uploaded." })
+    return
+  }
+  const file = req.files.photo
 
-  conn.query(sql, [req.params.catid], (err, results, fields) => {
-    res.json({
-      results
-    })
+  var params = {
+    localFile: file.tempFilePath,
+
+    s3Params: {
+      Bucket: config.AWS.BUCKET,
+      Key: file.name
+    }
+  }
+
+  var uploader = client.uploadFile(params)
+
+  uploader.on('error', function (err) {
+    console.error("unable to upload:", err.stack)
   })
+
+  uploader.on('end', function () {
+    console.log("done uploading")
+  })
+
+  res.json({ message: "success" })
 })
 
 router.post("/inventory", (req, res, next) => {
   const name = req.body.form.name
-  const quantity = req.body.form.quantity
-  const price = req.body.form.price
   const description = req.body.form.description
-  const catid = req.body.catid
+  const packageQuantity = req.body.form.packageQuantity
+  const quantityPerPackage = req.body.form.quantityPerPackage
+  const itemQuantity = req.body.form.itemQuantity
+  const pricePerPackage = req.body.form.pricePerPackage
 
-  if (!req.files || Object.keys(req.files).length === 0) {
-    const insertSql = `
-    INSERT INTO inventory (name, cat_id, price, description, quantity)
-    VALUES (?, ?, ?, ?, ?);
+  const catid = req.body.catid
+  const picture = req.body.picture ? req.body.picture : ''
+
+  const insertSql = `
+    INSERT INTO inventory 
+    (name, cat_id, pricePerPackage, description, packageQuantity, itemQuantity, picture, quantityPerPackage)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?);
     `
 
-    conn.query(
-      insertSql,
-      [name, catid, price, description, quantity],
-      (err2, results2, fields2) => {
-        res.json({
-          results2
-        })
-      }
-    )
-  } else {
-    const picture = req.files.picture
-    const md5Picture = rename(picture)
-
-    const rename = file =>
-      md5(Date.now()) +
-      "." +
-      file.name
-        .replace(/ /g, "-")
-        .split(".")
-        .pop()
-
-    const params = {
-      localFile: file.tempFilePath,
-
-      s3Params: {
-        Bucket: config.AWS.BUCKET,
-        Key: md5Picture
-      }
+  conn.query(
+    insertSql,
+    [name, catid, pricePerPackage, description, packageQuantity, itemQuantity, picture, quantityPerPackage],
+    (err2, results2, fields2) => {
+      res.json({
+        results2
+      })
     }
-
-    const uploader = client.uploadFile(params)
-
-    uploader.on('error', function (err) {
-      console.error("unable to upload:", err.stack)
-    })
-
-    uploader.on('end', function () {
-      const insertSql = `
-      INSERT INTO inventory (name, cat_id, price, description, quantity, picture)
-      VALUES (?, ?, ?, ?, ?, ?);
-      `
-
-      conn.query(
-        insertSql,
-        [name, catid, price, description, quantity, md5Picture],
-        (err2, results2, fields2) => {
-          res.json({
-            results2
-          })
-        }
-      )
-    })
-  }
+  )
 })
 
 router.patch("/inventory", (req, res, next) => {
-  const updateSql = "UPDATE inventory SET quantity = ? WHERE id = ?"
-  const quantity = req.body.quantity
+  console.log(req.body.form)
+  const updateSql = `
+  UPDATE inventory 
+  SET name = ?, packageQuantity = ?, itemQuantity = ?, pricePerPackage = ?, description = ?, quantityPerPackage = ?
+  WHERE id = ?;
+  `
+
+  const name = req.body.form.name
+  const description = req.body.form.description
+  const packageQuantity = req.body.form.packageQuantity
+  const quantityPerPackage = req.body.form.quantityPerPackage
+  const itemQuantity = req.body.form.itemQuantity
+  const pricePerPackage = req.body.form.pricePerPackage
+
   const id = req.body.id
 
-  conn.query(updateSql, [quantity, id], (err, results, fields) => {
-    res.json({
-      results
-    })
-  })
+  conn.query(
+    updateSql,
+    [name, packageQuantity, itemQuantity, pricePerPackage, description, quantityPerPackage, id],
+    (err, results, fields) => {
+      res.json({
+        results
+      })
+    }
+  )
 })
 
 router.delete("/inventory/:id", (req, res, next) => {
