@@ -1,7 +1,6 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import { Tab, Input, Form, Modal, Button } from "semantic-ui-react"
 import { useInventory } from "../../hooks"
-import "../../styles/sv.scss"
 
 import Items from "./Items"
 const md5 = require("md5")
@@ -34,56 +33,70 @@ export default props => {
     e.preventDefault()
 
     let validPost = true
-    if (form.name === '') {
+    if (form.name === "") {
       validPost = false
     }
 
-    if (form.description === '') {
+    if (form.description === "") {
       validPost = false
     }
 
-    if (form.packageQuantity === '' || form.packageQuantity === '0') {
+    if (form.packageQuantity === "" || form.packageQuantity === "0") {
       validPost = false
     }
 
-    if (form.quantityPerPackage === '' || form.quantityPerPackage === '0') {
+    if (form.quantityPerPackage === "" || form.quantityPerPackage === "0") {
       validPost = false
     }
 
-    if (form.itemQuantity === '') {
+    if (form.itemQuantity === "") {
       validPost = false
     }
 
-    if (form.pricePerPackage === '' || form.pricePerPackage === '0') {
+    if (form.pricePerPackage === "" || form.pricePerPackage === "0") {
       validPost = false
     }
 
     if (validPost) {
-      const rename = file =>
-        md5(Date.now()) +
-        "." +
-        file.name
-          .replace(/ /g, "-")
-          .split(".")
-          .pop()
+      if (image !== null) {
+        const rename = file =>
+          md5(Date.now()) +
+          "." +
+          file.name
+            .replace(/ /g, "-")
+            .split(".")
+            .pop()
 
-      const name = rename(image)
+        const name = rename(image)
 
-      const data = new FormData()
-      data.append("photo", image, name)
+        const data = new FormData()
+        data.append("photo", image, name)
 
-      addPic(data)
-      post(form, this.id, name)
-      setForm({
-        name: "",
-        description: "",
-        packageQuantity: "",
-        quantityPerPackage: "",
-        itemQuantity: "",
-        pricePerPackage: ""
-      })
-      setImage(null)
-      setLabel("Choose a file")
+        addPic(data)
+        post(form, this.id, name)
+        setForm({
+          name: "",
+          description: "",
+          packageQuantity: "",
+          quantityPerPackage: "",
+          itemQuantity: "",
+          pricePerPackage: ""
+        })
+        setImage(null)
+        setLabel("Choose a file")
+      } else {
+        post(form, this.id, "")
+        setForm({
+          name: "",
+          description: "",
+          packageQuantity: "",
+          quantityPerPackage: "",
+          itemQuantity: "",
+          pricePerPackage: ""
+        })
+        setImage(null)
+        setLabel("Choose a file")
+      }
     } else {
       alert("Your item was not added due to an empty or invalid input.")
       setForm({
@@ -106,6 +119,7 @@ export default props => {
           <Button onClick={e => e.preventDefault()}>Add a New Item</Button>
         }
         header="Add Item - Please Fill Out All Fields"
+        className={props.mode ? "dark" : "light"}
         content={
           <Form>
             <Form.Group widths="equal">
@@ -136,7 +150,7 @@ export default props => {
                 />
               </Form.Field>
             </Form.Group>
-            <Form.Group widths='equal'>
+            <Form.Group widths="equal">
               <Form.Field>
                 <label>Price per Package</label>
                 <Input
@@ -162,7 +176,7 @@ export default props => {
                   onInput={e => handleChange(e, "quantityPerPackage")}
                   type="number"
                   fluid
-                  placeholder='20'
+                  placeholder="20"
                 />
               </Form.Field>
               <Form.Field>
@@ -171,7 +185,7 @@ export default props => {
                   type="number"
                   onInput={e => handleChange(e, "itemQuantity")}
                   fluid
-                  placeholder='100'
+                  placeholder="100"
                 />
               </Form.Field>
             </Form.Group>
@@ -196,10 +210,12 @@ export default props => {
         ]}
       />
       {cat.inventory[0].name ? (
-        cat.inventory.map((item, i) => <Items item={item} key={"item-" + i} />)
+        cat.inventory.map((item, i) => (
+          <Items mode={props.mode} item={item} key={"item-" + i} />
+        ))
       ) : (
-          <h1>Please Enter an Item</h1>
-        )}
+        <h1>Please Enter an Item</h1>
+      )}
     </Tab.Pane>
   )
 }
