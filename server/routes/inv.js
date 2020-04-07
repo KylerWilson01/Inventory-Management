@@ -2,7 +2,7 @@ const express = require("express")
 const config = require("../config")
 const router = express.Router()
 const conn = require("../db")
-const s3 = require('@auth0/s3')
+const s3 = require("@auth0/s3")
 
 const client = s3.createClient({
   maxAsyncS3: 20,
@@ -17,7 +17,7 @@ const client = s3.createClient({
   }
 })
 
-router.post('/upload', (req, res, next) => {
+router.post("/upload", (req, res, next) => {
   if (!req.files || Object.keys(req.files).length === 0) {
     console.log([...Object.keys(req)])
     res.status(400).json({ message: "No files were uploaded." })
@@ -36,11 +36,11 @@ router.post('/upload', (req, res, next) => {
 
   var uploader = client.uploadFile(params)
 
-  uploader.on('error', function (err) {
+  uploader.on("error", function(err) {
     console.error("unable to upload:", err.stack)
   })
 
-  uploader.on('end', function () {
+  uploader.on("end", function() {
     console.log("done uploading")
   })
 
@@ -56,7 +56,7 @@ router.post("/inventory", (req, res, next) => {
   const pricePerPackage = req.body.form.pricePerPackage
 
   const catid = req.body.catid
-  const picture = req.body.picture ? req.body.picture : ''
+  const picture = req.body.picture ? req.body.picture : ""
 
   const insertSql = `
     INSERT INTO inventory 
@@ -66,7 +66,16 @@ router.post("/inventory", (req, res, next) => {
 
   conn.query(
     insertSql,
-    [name, catid, pricePerPackage, description, packageQuantity, itemQuantity, picture, quantityPerPackage],
+    [
+      name,
+      catid,
+      pricePerPackage,
+      description,
+      packageQuantity,
+      itemQuantity,
+      picture,
+      quantityPerPackage
+    ],
     (err2, results2, fields2) => {
       res.json({
         results2
@@ -94,7 +103,15 @@ router.patch("/inventory", (req, res, next) => {
 
   conn.query(
     updateSql,
-    [name, packageQuantity, itemQuantity, pricePerPackage, description, quantityPerPackage, id],
+    [
+      name,
+      packageQuantity,
+      itemQuantity,
+      pricePerPackage,
+      description,
+      quantityPerPackage,
+      id
+    ],
     (err, results, fields) => {
       res.json({
         results
