@@ -3,7 +3,6 @@ import { Form, Input, Button, Modal } from "semantic-ui-react"
 import { useAuth, useCats } from "../../hooks"
 
 export default props => {
-  console.log(props)
   const { profile } = useAuth()
   const { addCat } = useCats()
   const [cat, setCat] = useState({

@@ -155,6 +155,7 @@ export default props => {
                 <label>Price per Package</label>
                 <Input
                   onInput={e => handleChange(e, "pricePerPackage")}
+                  type="number"
                   fluid
                   placeholder="6.8"
                 />
@@ -214,8 +215,8 @@ export default props => {
           <Items mode={props.mode} item={item} key={"item-" + i} />
         ))
       ) : (
-        <h1>Please Enter an Item</h1>
-      )}
+          <h1>Please Enter an Item</h1>
+        )}
     </Tab.Pane>
   )
 }
