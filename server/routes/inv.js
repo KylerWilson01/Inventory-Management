@@ -18,12 +18,12 @@ const client = s3.createClient({
 })
 
 router.post("/upload", (req, res, next) => {
-  console.log("FILES", req.files)
   if (!req.files || Object.keys(req.files).length === 0) {
     res.status(400).json({ message: "No files were uploaded." })
     return
   }
   const file = req.files.photo
+  console.log(file.tempFilePath)
 
   var params = {
     localFile: file.tempFilePath,
@@ -41,10 +41,10 @@ router.post("/upload", (req, res, next) => {
   })
 
   uploader.on("end", function () {
-    console.log("done uploading")
+    console.log('upload successful')
   })
 
-  res.json({ message: "success" })
+  res.json({ message: 'done uploading' })
 })
 
 router.post("/inventory", (req, res, next) => {
@@ -87,7 +87,7 @@ router.post("/inventory", (req, res, next) => {
 router.patch("/inventory", (req, res, next) => {
   const updateSql = `
   UPDATE inventory 
-  SET name = ?, packageQuantity = ?, itemQuantity = ?, pricePerPackage = ?, description = ?, quantityPerPackage = ?
+  SET name = ?, packageQuantity = ?, itemQuantity = ?, pricePerPackage = ?, description = ?, quantityPerPackage = ?, picture = ?
   WHERE id = ?;
   `
 
@@ -97,6 +97,7 @@ router.patch("/inventory", (req, res, next) => {
   const quantityPerPackage = req.body.form.quantityPerPackage
   const itemQuantity = req.body.form.itemQuantity
   const pricePerPackage = req.body.form.pricePerPackage
+  const picture = req.body.picture
 
   const id = req.body.id
 
@@ -109,6 +110,7 @@ router.patch("/inventory", (req, res, next) => {
       pricePerPackage,
       description,
       quantityPerPackage,
+      picture,
       id
     ],
     (err, results, fields) => {
@@ -127,6 +129,26 @@ router.delete("/inventory/:id", (req, res, next) => {
       results
     })
   })
+})
+
+router.get('/images', (req, res, next) => {
+  var params = {
+    accessKeyId: config.AWS.KEY,
+
+    s3Params: {
+      Bucket: config.AWS.BUCKET
+    }
+  }
+  var list = client.listObjects(params)
+
+  list.on('error', function (err) {
+    console.error("unable to list:", err.stack)
+  })
+
+  list.on('data', function (data) {
+    res.json(data.Contents)
+  })
+
 })
 
 module.exports = router

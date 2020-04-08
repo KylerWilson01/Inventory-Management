@@ -9,34 +9,75 @@ import {
   Form
 } from "semantic-ui-react"
 import { useInventory } from "../../hooks"
+import md5 from 'md5'
 
 export default props => {
-  const { update, del } = useInventory()
+  const { update, del, picture, addPic } = useInventory()
   const [form, setForm] = useState({
     name: props.item.name,
     description: props.item.description,
     pricePerPackage: props.item.pricePerPackage,
     packageQuantity: props.item.packageQuantity,
     quantityPerPackage: props.item.quantityPerPackage,
-    itemQuantity: props.item.itemQuantity
+    itemQuantity: props.item.itemQuantity,
+    picture: props.item.picture
   })
 
-  const img = props.item.picture
-    ? `https://inventory-management-project.s3.amazonaws.com/${props.item.picture}`
-    : "http://placehold.it/2000"
+  const [newImage, setNewImage] = useState(null)
+
+  let image = ''
+
+  picture.map(picture => {
+    if (picture.Key === props.item.picture) {
+      image = picture.Key
+    }
+  })
+
+  const img = image
+    ? `https://inventory-management-project.s3.amazonaws.com/${image}`
+    : "http://placehold.it/200"
 
   function handleUpdate(e) {
     e.preventDefault()
-    console.log(form)
-    update(form, this.id)
-    setForm({
-      name: form.name,
-      description: form.description,
-      pricePerPackage: form.pricePerPackage,
-      packageQuantity: form.packageQuantity,
-      quantityPerPackage: form.quantityPerPackage,
-      itemQuantity: form.itemQuantity
-    })
+    if (newImage !== null) {
+      const rename = file =>
+        md5(Date.now()) +
+        "." +
+        file.name
+          .replace(/ /g, "-")
+          .split(".")
+          .pop()
+
+
+      const name = rename(newImage)
+
+      const data = new FormData()
+      data.append("photo", newImage, name)
+
+      addPic(data)
+      update(form, name, this.id)
+      setForm({
+        name: form.name,
+        description: form.description,
+        pricePerPackage: form.pricePerPackage,
+        packageQuantity: form.packageQuantity,
+        quantityPerPackage: form.quantityPerPackage,
+        itemQuantity: form.itemQuantity,
+        picture: name
+      })
+    } else {
+      update(form, form.picture, this.id)
+      setForm({
+        name: form.name,
+        description: form.description,
+        pricePerPackage: form.pricePerPackage,
+        packageQuantity: form.packageQuantity,
+        quantityPerPackage: form.quantityPerPackage,
+        itemQuantity: form.itemQuantity,
+        picture: form.picture
+      })
+    }
+
   }
 
   function handleDelete(e) {
@@ -86,6 +127,21 @@ export default props => {
                       onInput={e => handleChange(e, "name")}
                       fluid
                       placeholder={props.item.name}
+                    />
+                  </Form.Field>
+                  <Form.Field>
+                    <label htmlFor="file" name="label">
+                      Choose a file
+                    </label>
+                    <Input
+                      id="file"
+                      type="file"
+                      name="image"
+                      onChange={e =>
+                        setNewImage(e.target.files[0])
+                      }
+                      fluid
+                      accept="image/png, image/jpeg"
                     />
                   </Form.Field>
                 </Form.Group>
@@ -181,21 +237,21 @@ export default props => {
                       <span>
                         $
                         {Number(
-                          (props.item.packageQuantity *
-                            props.item.quantityPerPackage +
-                            props.item.itemQuantity) *
-                            (props.item.pricePerPackage /
-                              props.item.quantityPerPackage)
-                        ).toFixed(2)}
+                        (props.item.packageQuantity *
+                          props.item.quantityPerPackage +
+                          props.item.itemQuantity) *
+                        (props.item.pricePerPackage /
+                          props.item.quantityPerPackage)
+                      ).toFixed(2)}
                       </span>
                     </Item.Meta>
                     <Item.Meta>
                       <span>
                         $
                         {Number(
-                          props.item.pricePerPackage /
-                            props.item.quantityPerPackage
-                        ).toFixed(2)}{" "}
+                        props.item.pricePerPackage /
+                        props.item.quantityPerPackage
+                      ).toFixed(2)}{" "}
                         per {props.item.name}
                       </span>
                     </Item.Meta>
