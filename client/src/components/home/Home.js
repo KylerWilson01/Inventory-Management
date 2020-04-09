@@ -12,6 +12,8 @@ import Nav from "./index"
 import Homebg from "../../assets/Homebg.png"
 import logo from "../../assets/logo.png"
 
+import "../../styles/home.scss"
+
 export default (props) => {
   return (
     <div className="homewrap">
@@ -19,7 +21,12 @@ export default (props) => {
       <div>
         <Container>
           <div className="banner">
+<<<<<<< HEAD
             <Image src={logo} />
+=======
+            <Header as="h1" content="S.I.M." />
+            <Header as="h2" content="Simplified Inventory Management" />
+>>>>>>> 10d96e3ea08635b5a1318ed5bc079dcf2b5ebe57
             <Button href="/login" content="Get Started" />
           </div>
         </Container>
