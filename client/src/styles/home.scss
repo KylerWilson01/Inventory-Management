@@ -1,7 +1,10 @@
+.wrapper {
+  background: var(--color-gray);
+}
+
 .homewrap {
   background: var(--color-gray);
   height: 100vh;
-
   .ui.container {
     width: 100%;
 
@@ -18,28 +21,29 @@
         background: transparent;
         color: var(--color-peach);
         border: 1px solid var(--color-gray);
+        margin: 0;
       }
       .ui.button:hover {
         background: var(--color-red);
       }
 
       .ui.image {
+        width: 550px;
         height: 270px;
-        width: 600px;
       }
     }
+  }
 
-    .ui.segment {
+  .ui.segment {
+    color: var(--color-peach);
+    background-color: var(--color-gray);
+    height: 46.5vh;
+
+    .grid {
+      background: var(--color-gray);
+    }
+    .ui.header {
       color: var(--color-peach);
-      background-color: var(--color-gray);
-      height: 46.5vh;
-
-      .grid {
-        background: var(--color-gray);
-      }
-      .ui.header {
-        color: var(--color-peach);
-      }
     }
   }
 }
