@@ -6,11 +6,12 @@ import "../styles/darkmode.scss"
 import "../styles/lightmode.scss"
 import "../styles/singleViewDark.scss"
 import "../styles/singleViewLight.scss"
+import "../styles/home.scss"
 import Auth from "./auth/Auth"
 import Inventory from "./inventory/Inventory"
 import Home from "./home/Home"
 
-export default props => {
+export default (props) => {
   return (
     <AuthProvider>
       <Router>
