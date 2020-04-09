@@ -41,11 +41,11 @@ export default props => {
       validPost = false
     }
 
-    if (form.packageQuantity === "" || form.packageQuantity === "0") {
+    if (form.packageQuantity === "") {
       validPost = false
     }
 
-    if (form.quantityPerPackage === "" || form.quantityPerPackage === "0") {
+    if (form.quantityPerPackage === "") {
       validPost = false
     }
 
@@ -53,7 +53,7 @@ export default props => {
       validPost = false
     }
 
-    if (form.pricePerPackage === "" || form.pricePerPackage === "0") {
+    if (form.pricePerPackage === "") {
       validPost = false
     }
 
@@ -98,7 +98,7 @@ export default props => {
         setLabel("Choose a file")
       }
     } else {
-      alert("Your item was not added due to an empty or invalid input.")
+      alert("Your item was not added due to an empty input field.")
       setForm({
         name: "",
         description: "",
