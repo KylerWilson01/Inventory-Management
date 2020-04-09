@@ -1,12 +1,53 @@
-import React from 'react'
+import React from "react"
+import {
+  Button,
+  Container,
+  Grid,
+  Header,
+  Image,
+  Segment,
+} from "semantic-ui-react"
 
-import Nav from './index'
+import Nav from "./index"
+import Homebg from "../../assets/Homebg.png"
 
-export default props => {
+export default (props) => {
   return (
-    <div>
+    <div className="homewrap">
       <Nav />
-      <h1>Home</h1>
+      <div>
+        <Container>
+          <div className="banner">
+            <Header as="h1" content="S.I.M." />
+            <Header as="h2" content="Simplified Inventory Management" />
+            <Button href="/login">Get Started</Button>
+          </div>
+        </Container>
+        <Segment>
+          <Grid container stackable verticalAlign="middle">
+            <Grid.Row>
+              <Grid.Column width={8}>
+                <Header>
+                  <h2>We Help Companies and The Individual</h2>
+                </Header>
+                <p style={{ fontSize: "1.20em" }}>
+                  With our Inventory management app, you can streamline your
+                  life or business through an easy to use and undertsand
+                  interface. You can create your own custom categories to house
+                  your different items for storage into our database that will
+                  hold every item you enter! You can give custom descriptions
+                  for items, and upload your own images to help better describe
+                  different items, and update them on the fly. S.I.M. we aim to
+                  simplify your inventory management.
+                </p>
+              </Grid.Column>
+              <Grid.Column floated="right" width={8}>
+                <Image bordered rounded size="big" src={Homebg} />
+              </Grid.Column>
+            </Grid.Row>
+          </Grid>
+        </Segment>
+      </div>
     </div>
   )
 }
