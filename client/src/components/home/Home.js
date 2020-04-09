@@ -10,6 +10,7 @@ import {
 
 import Nav from "./index"
 import Homebg from "../../assets/Homebg.png"
+import logo from "../../assets/logo.png"
 
 export default (props) => {
   return (
@@ -18,9 +19,8 @@ export default (props) => {
       <div>
         <Container>
           <div className="banner">
-            <Header as="h1" content="S.I.M." />
-            <Header as="h2" content="Simplified Inventory Management" />
-            <Button href="/login">Get Started</Button>
+            <Image src={logo} />
+            <Button href="/login" content="Get Started" />
           </div>
         </Container>
         <Segment>

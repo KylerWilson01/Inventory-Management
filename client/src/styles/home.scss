@@ -1,45 +1,45 @@
-.wrapper {
+.homewrap {
   background: var(--color-gray);
-}
+  height: 100vh;
 
-.ui.container {
-  width: 100% !important;
+  .ui.container {
+    width: 100%;
 
-  .banner {
-    background: var(--color-darkgray);
-    display: grid;
-    justify-content: center;
-    height: 45vh;
+    .banner {
+      background: var(--color-darkgray);
+      display: grid;
+      justify-content: center;
+      height: 45vh;
 
-    .ui.button {
-      width: 10vw;
-      height: 5.5vh;
-      justify-self: center;
-      background: transparent;
-      color: var(--color-peach);
-      border: 1px solid var(--color-gray);
+      .ui.button {
+        height: 3rem;
+        justify-self: center;
+        background: transparent;
+        color: var(--color-peach);
+        border: 1px solid var(--color-gray);
+        font-size: 16px;
+      }
+      .ui.button:hover {
+        background: var(--color-red);
+      }
+
+      .ui.image {
+        height: 270px;
+        width: 600px;
+      }
     }
-    .ui.button:hover {
-      background: var(--color-red);
-    }
+  }
 
+  .ui.segment {
+    color: var(--color-peach);
+    background-color: var(--color-gray);
+    height: 46.5vh;
+
+    .grid {
+      background: var(--color-gray);
+    }
     .ui.header {
       color: var(--color-peach);
-      margin-top: 1em;
-      justify-self: center;
     }
-  }
-}
-
-.ui.segment {
-  color: var(--color-peach);
-  background-color: var(--color-gray) !important;
-  height: 46.5vh;
-
-  .grid {
-    background: var(--color-gray);
-  }
-  .ui.header {
-    color: var(--color-peach);
   }
 }
