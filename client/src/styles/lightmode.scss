@@ -36,7 +36,10 @@
       color: var(--color-lightblack);
       width: 23.5vw;
     }
-
+    .ui.button:hover {
+      background: var(--color-green);
+      border: 1px solid var(--color-lightgray);
+    }
     .ui.input.search {
       width: 74.5vw;
       margin: 0 0 0 auto;
