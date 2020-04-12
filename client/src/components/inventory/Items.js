@@ -6,12 +6,12 @@ import {
   Button,
   Modal,
   Item,
-  Form
+  Form,
 } from "semantic-ui-react"
 import { useInventory } from "../../hooks"
-import md5 from 'md5'
+import md5 from "md5"
 
-export default props => {
+export default (props) => {
   const { update, del, picture, addPic } = useInventory()
   const [form, setForm] = useState({
     name: props.item.name,
@@ -20,14 +20,14 @@ export default props => {
     packageQuantity: props.item.packageQuantity,
     quantityPerPackage: props.item.quantityPerPackage,
     itemQuantity: props.item.itemQuantity,
-    picture: props.item.picture
+    picture: props.item.picture,
   })
 
   const [newImage, setNewImage] = useState(null)
 
-  let image = ''
+  let image = ""
 
-  picture.map(picture => {
+  picture.map((picture) => {
     if (picture.Key === props.item.picture) {
       image = picture.Key
     }
@@ -39,15 +39,10 @@ export default props => {
 
   function handleUpdate(e) {
     e.preventDefault()
+    console.log(form)
     if (newImage !== null) {
-      const rename = file =>
-        md5(Date.now()) +
-        "." +
-        file.name
-          .replace(/ /g, "-")
-          .split(".")
-          .pop()
-
+      const rename = (file) =>
+        md5(Date.now()) + "." + file.name.replace(/ /g, "-").split(".").pop()
 
       const name = rename(newImage)
 
@@ -57,27 +52,26 @@ export default props => {
       addPic(data)
       update(form, name, this.id)
       setForm({
-        name: form.name,
-        description: form.description,
-        pricePerPackage: form.pricePerPackage,
-        packageQuantity: form.packageQuantity,
-        quantityPerPackage: form.quantityPerPackage,
-        itemQuantity: form.itemQuantity,
-        picture: name
+        name: "",
+        description: "",
+        pricePerPackage: "",
+        packageQuantity: "",
+        quantityPerPackage: "",
+        itemQuantity: "",
+        picture: "",
       })
     } else {
       update(form, form.picture, this.id)
       setForm({
-        name: form.name,
-        description: form.description,
-        pricePerPackage: form.pricePerPackage,
-        packageQuantity: form.packageQuantity,
-        quantityPerPackage: form.quantityPerPackage,
-        itemQuantity: form.itemQuantity,
-        picture: form.picture
+        name: "",
+        description: "",
+        pricePerPackage: "",
+        packageQuantity: "",
+        quantityPerPackage: "",
+        itemQuantity: "",
+        picture: "",
       })
     }
-
   }
 
   function handleDelete(e) {
@@ -88,7 +82,7 @@ export default props => {
   function handleChange(e, field) {
     setForm({
       ...form,
-      [field]: e.target.value
+      [field]: e.target.value,
     })
   }
 
@@ -114,7 +108,21 @@ export default props => {
 
           <Modal
             trigger={
-              <Button onClick={e => e.preventDefault}>Update item</Button>
+              <Button
+                onClick={(e) =>
+                  setForm({
+                    name: props.item.name,
+                    description: props.item.description,
+                    pricePerPackage: props.item.pricePerPackage,
+                    packageQuantity: props.item.packageQuantity,
+                    quantityPerPackage: props.item.quantityPerPackage,
+                    itemQuantity: props.item.itemQuantity,
+                    picture: props.item.picture,
+                  })
+                }
+              >
+                Update item
+              </Button>
             }
             header={`Update ${props.item.name}`}
             className={props.mode ? "dark" : "light"}
@@ -124,7 +132,7 @@ export default props => {
                   <Form.Field>
                     <label>Item Name</label>
                     <Input
-                      onInput={e => handleChange(e, "name")}
+                      onInput={(e) => handleChange(e, "name")}
                       fluid
                       placeholder={props.item.name}
                     />
@@ -137,9 +145,7 @@ export default props => {
                       id="file"
                       type="file"
                       name="image"
-                      onChange={e =>
-                        setNewImage(e.target.files[0])
-                      }
+                      onChange={(e) => setNewImage(e.target.files[0])}
                       fluid
                       accept="image/png, image/jpeg"
                     />
@@ -149,7 +155,7 @@ export default props => {
                   <Form.Field>
                     <label>Price per Package</label>
                     <Input
-                      onInput={e => handleChange(e, "pricePerPackage")}
+                      onInput={(e) => handleChange(e, "pricePerPackage")}
                       fluid
                       placeholder={props.item.pricePerPackage}
                     />
@@ -157,7 +163,7 @@ export default props => {
                   <Form.Field>
                     <label>Quantity of Packages</label>
                     <Input
-                      onInput={e => handleChange(e, "packageQuantity")}
+                      onInput={(e) => handleChange(e, "packageQuantity")}
                       fluid
                       type="number"
                       placeholder={props.item.packageQuantity}
@@ -168,17 +174,17 @@ export default props => {
                   <Form.Field>
                     <label>Quantity per Package</label>
                     <Input
-                      onInput={e => handleChange(e, "quantityPerPackage")}
+                      onInput={(e) => handleChange(e, "quantityPerPackage")}
                       type="number"
                       fluid
                       placeholder={props.item.quantityPerPackage}
                     />
                   </Form.Field>
                   <Form.Field>
-                    <label>Quantity of Lose Items</label>
+                    <label>Quantity of Loose Items</label>
                     <Input
                       type="number"
-                      onInput={e => handleChange(e, "itemQuantity")}
+                      onInput={(e) => handleChange(e, "itemQuantity")}
                       fluid
                       placeholder={props.item.itemQuantity}
                     />
@@ -187,7 +193,7 @@ export default props => {
                 <Form.Field>
                   <label>Description</label>
                   <Input
-                    onChange={e => handleChange(e, "description")}
+                    onChange={(e) => handleChange(e, "description")}
                     fluid
                     placeholder={props.item.description}
                   />
@@ -200,15 +206,15 @@ export default props => {
                 content: "Delete Item",
                 positive: true,
                 onClick: handleDelete,
-                id: props.item.id
+                id: props.item.id,
               },
               {
                 key: "update",
                 content: "Update Item",
                 positive: true,
                 onClick: handleUpdate,
-                id: props.item.id
-              }
+                id: props.item.id,
+              },
             ]}
           />
 
@@ -216,7 +222,7 @@ export default props => {
 
           <Modal
             trigger={
-              <Button onClick={e => e.preventDefault()}>Expanded view</Button>
+              <Button onClick={(e) => e.preventDefault()}>Expanded view</Button>
             }
             header={props.item.name}
             className={props.mode ? "dark" : "light"}
@@ -237,21 +243,21 @@ export default props => {
                       <span>
                         $
                         {Number(
-                        (props.item.packageQuantity *
-                          props.item.quantityPerPackage +
-                          props.item.itemQuantity) *
-                        (props.item.pricePerPackage /
-                          props.item.quantityPerPackage)
-                      ).toFixed(2)}
+                          (props.item.packageQuantity *
+                            props.item.quantityPerPackage +
+                            props.item.itemQuantity) *
+                            (props.item.pricePerPackage /
+                              props.item.quantityPerPackage)
+                        ).toFixed(2)}
                       </span>
                     </Item.Meta>
                     <Item.Meta>
                       <span>
                         $
                         {Number(
-                        props.item.pricePerPackage /
-                        props.item.quantityPerPackage
-                      ).toFixed(2)}{" "}
+                          props.item.pricePerPackage /
+                            props.item.quantityPerPackage
+                        ).toFixed(2)}{" "}
                         per {props.item.name}
                       </span>
                     </Item.Meta>

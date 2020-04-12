@@ -4,6 +4,7 @@ import { Tab, Button, Icon, Menu, Input, Modal } from "semantic-ui-react"
 import logo from "../../assets/logo.png"
 import NewCat from "./NewCat"
 import Cat from "./NewItem"
+import UpdatePassword from "./updatePassword"
 
 export default (props) => {
   const { profile, signout } = useAuth()
@@ -73,19 +74,22 @@ export default (props) => {
           closeIcon
           className={darkMode ? "dark" : "light"}
           content={
-            <>
-              <div className="settingsWrapper">
-                <Button
-                  className="user"
-                  onClick={(e) => setDarkMode((prevMode) => !prevMode)}
-                >
-                  {darkMode ? "Change to light mode" : "Change to dark mode"}
-                </Button>
-                <Button className="user" onClick={(e) => signout()}>
-                  Sign out
-                </Button>
-              </div>
-            </>
+            <div className="settingsWrapper">
+              <Button
+                className="user"
+                onClick={(e) => setDarkMode((prevMode) => !prevMode)}
+              >
+                {darkMode ? "Change to light mode" : "Change to dark mode"}
+              </Button>
+              <UpdatePassword
+                className="password"
+                user={profile.username}
+                mode={darkMode}
+              />
+              <Button className="user" onClick={(e) => signout()}>
+                Sign out
+              </Button>
+            </div>
           }
           actions={[{ key: "done", content: "Done", positive: true }]}
         />

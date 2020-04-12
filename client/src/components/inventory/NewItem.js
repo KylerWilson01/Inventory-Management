@@ -5,7 +5,7 @@ import { useInventory } from "../../hooks"
 import Items from "./Items"
 const md5 = require("md5")
 
-export default props => {
+export default (props) => {
   const cat = props.props
 
   const { post, addPic } = useInventory()
@@ -16,7 +16,7 @@ export default props => {
     packageQuantity: "",
     quantityPerPackage: "",
     itemQuantity: "",
-    pricePerPackage: ""
+    pricePerPackage: "",
   })
 
   const [image, setImage] = useState(null)
@@ -25,7 +25,7 @@ export default props => {
   function handleChange(e, field) {
     setForm({
       ...form,
-      [field]: e.target.value
+      [field]: e.target.value,
     })
   }
 
@@ -59,13 +59,8 @@ export default props => {
 
     if (validPost) {
       if (image !== null) {
-        const rename = file =>
-          md5(Date.now()) +
-          "." +
-          file.name
-            .replace(/ /g, "-")
-            .split(".")
-            .pop()
+        const rename = (file) =>
+          md5(Date.now()) + "." + file.name.replace(/ /g, "-").split(".").pop()
 
         const name = rename(image)
 
@@ -80,7 +75,7 @@ export default props => {
           packageQuantity: "",
           quantityPerPackage: "",
           itemQuantity: "",
-          pricePerPackage: ""
+          pricePerPackage: "",
         })
         setImage(null)
         setLabel("Choose a file")
@@ -92,7 +87,7 @@ export default props => {
           packageQuantity: "",
           quantityPerPackage: "",
           itemQuantity: "",
-          pricePerPackage: ""
+          pricePerPackage: "",
         })
         setImage(null)
         setLabel("Choose a file")
@@ -105,7 +100,7 @@ export default props => {
         packageQuantity: "",
         quantityPerPackage: "",
         itemQuantity: "",
-        pricePerPackage: ""
+        pricePerPackage: "",
       })
       setImage(null)
       setLabel("Choose a file")
@@ -116,7 +111,7 @@ export default props => {
     <Tab.Pane>
       <Modal
         trigger={
-          <Button onClick={e => e.preventDefault()}>Add a New Item</Button>
+          <Button onClick={(e) => e.preventDefault()}>Add a New Item</Button>
         }
         header="Add Item - Please Fill Out All Fields"
         className={props.mode ? "dark" : "light"}
@@ -126,7 +121,7 @@ export default props => {
               <Form.Field>
                 <label>Item Name</label>
                 <Input
-                  onInput={e => handleChange(e, "name")}
+                  onInput={(e) => handleChange(e, "name")}
                   fluid
                   placeholder="Orange"
                 />
@@ -139,7 +134,7 @@ export default props => {
                   id="file"
                   type="file"
                   name="image"
-                  onChange={e =>
+                  onChange={(e) =>
                     setImage(
                       e.target.files[0],
                       setLabel(e.target.files[0].name)
@@ -154,7 +149,7 @@ export default props => {
               <Form.Field>
                 <label>Price per Package</label>
                 <Input
-                  onInput={e => handleChange(e, "pricePerPackage")}
+                  onInput={(e) => handleChange(e, "pricePerPackage")}
                   type="number"
                   fluid
                   placeholder="6.8"
@@ -163,7 +158,7 @@ export default props => {
               <Form.Field>
                 <label>Quantity of Packages</label>
                 <Input
-                  onInput={e => handleChange(e, "packageQuantity")}
+                  onInput={(e) => handleChange(e, "packageQuantity")}
                   fluid
                   type="number"
                   placeholder="5"
@@ -174,17 +169,17 @@ export default props => {
               <Form.Field>
                 <label>Quantity per Package</label>
                 <Input
-                  onInput={e => handleChange(e, "quantityPerPackage")}
+                  onInput={(e) => handleChange(e, "quantityPerPackage")}
                   type="number"
                   fluid
                   placeholder="20"
                 />
               </Form.Field>
               <Form.Field>
-                <label>Quantity of Lose Items</label>
+                <label>Quantity of Loose Items</label>
                 <Input
                   type="number"
-                  onInput={e => handleChange(e, "itemQuantity")}
+                  onInput={(e) => handleChange(e, "itemQuantity")}
                   fluid
                   placeholder="100"
                 />
@@ -193,7 +188,7 @@ export default props => {
             <Form.Field>
               <label>Description</label>
               <Input
-                onChange={e => handleChange(e, "description")}
+                onChange={(e) => handleChange(e, "description")}
                 fluid
                 placeholder="Tell us about your item..."
               />
@@ -206,8 +201,8 @@ export default props => {
             content: "Add",
             positive: true,
             onClick: handlePost,
-            id: cat.id
-          }
+            id: cat.id,
+          },
         ]}
       />
       {cat.inventory[0].name ? (
@@ -215,8 +210,8 @@ export default props => {
           <Items mode={props.mode} item={item} key={"item-" + i} />
         ))
       ) : (
-          <h1>Please Enter an Item</h1>
-        )}
+        <h1>Please Enter an Item</h1>
+      )}
     </Tab.Pane>
   )
 }
