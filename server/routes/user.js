@@ -51,17 +51,13 @@ router.post("/register", (req, res, next) => {
 
 router.patch("/password", (req, res, next) => {
   const username = req.body.username
-  const getSql = `SELECT id FROM users WHERE username = ?`
+  const salt = randomSalt(20)
+  const password = sha512(req.body.password + salt)
+  const sql = `UPDATE users SET password = ?, salt = ? WHERE username = ?;`
 
-  conn.query(getSql, [username], (err, results, fields) => {
-    const id = results.body.id
-    const salt = randomSalt(20)
-    const password = sha512(req.body.password + salt)
-    const sql = `UPDATE users SET password = ?, salt = ? WHERE id = ?;`
-
-    conn.query(sql, [password, salt, id], (err, results, fields) => {
-      res.json({ message: "Password Updated" })
-    })
+  conn.query(sql, [password, salt, username], (err1, results1, fields1) => {
+    console.log(results1)
+    res.json({ message: "Password Updated" })
   })
 })
 

@@ -18,10 +18,10 @@ export default (state = initialState, action) => {
 
 function updatePassword(password, username) {
   return (dispatch) => {
-    api.patch(`/password`, { password, username }).then((resp) => {
+    api.patch(`/password`, { password, username }).then(resp => {
       dispatch({
         type: UPDATE_PASSWORD,
-        payload: resp.data,
+        payload: password
       })
     })
   }
@@ -29,6 +29,7 @@ function updatePassword(password, username) {
 
 export function useUsers() {
   const dispatch = useDispatch()
+  const password = useSelector(appState => appState.userState.password)
 
   const changePassword = (password, username) =>
     dispatch(updatePassword(password, username))
