@@ -34,13 +34,13 @@ export default (props) => {
                 </Header>
                 <p style={{ fontSize: "1.20em" }}>
                   With our Inventory management app, you can streamline your
-                  life or business through an easy to use and undertsand
-                  interface. You can create your own custom categories to house
-                  your different items for storage into our database that will
-                  hold every item you enter! You can give custom descriptions
-                  for items, and upload your own images to help better describe
-                  different items, and update them on the fly. S.I.M. we aim to
-                  simplify your inventory management.
+                  life or business through an easy to use interface. You can
+                  create your own custom categories to house your different
+                  items for storage into our database that will hold every item
+                  you enter! You can give custom descriptions for items, and
+                  upload your own images to help better describe different
+                  items, and update them on the fly. S.I.M. we aim to simplify
+                  your inventory management.
                 </p>
               </Grid.Column>
               <Grid.Column floated="right" width={8}>
